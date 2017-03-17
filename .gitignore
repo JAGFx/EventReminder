@@ -1,0 +1,20 @@
+logs/*
+!.gitkeep
+node_modules/
+www/app/bower_components/
+tmp
+.DS_Store
+.idea
+
+# Node
+npm-debug.log
+/node_modules
+``
+# Cordova
+/platforms/
+/plugins/
+
+!/platforms/platforms.json
+
+# res
+resources/signing
