@@ -57,17 +57,41 @@ function View1Ctrl( $cordovaCamera, $cordovaContacts, $cordovaGeolocation, $log 
 	
 	/* ================================================= GEOLOCATION */
 	$this.geolocationDevice = function () {
-		var posOptions = { timeout: 10000, enableHighAccuracy: false };
+		var posOptions = { timeout: 10000, enableHighAccuracy: true };
 		$cordovaGeolocation
 			.getCurrentPosition( posOptions )
 			.then( function ( position ) {
+				console.log( 'Init', position );
 				$this.geoloc = {
-					lat: position.coords.latitude,
-					lon: position.coords.longitude
+					lat:  position.coords.latitude,
+					long: position.coords.longitude
 				};
 			}, function ( err ) {
-				// error
+				console.error( err.message );
 			} );
+		
+		var watchOptions = {
+			timeout:            3000,
+			enableHighAccuracy: true // may cause errors if true
+		};
+		
+		var watch = $cordovaGeolocation.watchPosition( watchOptions );
+		watch.then(
+			function ( data ) {
+				console.log( 'Watch data', data );
+			},
+			function ( err ) {
+				console.error( err.message );
+			},
+			function ( position ) {
+				console.log( 'Callback', position );
+				$this.geoloc = {
+					lat:  position.coords.latitude,
+					long: position.coords.longitude
+				};
+			} );
+		
+		/*watch.clearWatch();*/
 	};
 	
 	document.addEventListener( "deviceready", function () {

@@ -2,11 +2,17 @@
 
 // Declare app level module which depends on views, and components
 angular
-	.module( 'myApp', [
+	.module( 'eventReminderApp', [
 		'ui.router',
 		'ngRoute',
 		'ngCordova',
-		'myApp.view1'
+		'myApp.view1',
+		
+		// Services
+		'SQLiteFactory',
+		'PictureFactory',
+		'EventFactory',
+		'ContactFactory'
 	] )
 	.config( function ( $locationProvider ) {
 		$locationProvider.hashPrefix( '!' );
