@@ -6,14 +6,18 @@ angular
 		'ui.router',
 		'ngRoute',
 		'ngCordova',
-		'myApp.view1',
-		
-		// Services
-		'SQLiteFactory',
-		'PictureFactory',
-		'EventFactory',
-		'ContactFactory'
+		'myApp.view1'
 	] )
 	.config( function ( $locationProvider ) {
 		$locationProvider.hashPrefix( '!' );
+	} )
+	.constant( 'CONSTANTS', {
+		DB_NAME: 'eventReminder.db'
+	} )
+	.controller( function ( SQLiteFactory ) {
+		document.addEventListener( "deviceready", function () {
+			console.log( 'Ready' );
+			SQLiteFactory.initDb();
+			
+		} );
 	} );
