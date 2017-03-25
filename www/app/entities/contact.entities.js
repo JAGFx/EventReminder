@@ -7,8 +7,12 @@
  *
  */
 
-function Contact( lastname, firstname, tel ) {
+function Contact( lastname, firstname, email ) {
 	this.lastname  = lastname;
 	this.firstname = firstname;
-	this.tel       = tel;
+	this.email = email;
+	
+	this.toString = function () {
+		return this.firstname + ' ' + this.lastname + ' <' + this.email + '>';
+	}
 }

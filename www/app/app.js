@@ -6,11 +6,17 @@ angular
 		'ui.router',
 		'ngRoute',
 		'ngCordova',
-		'er.event.list'
+		
+		'er.event.list',
+		'er.event.detail'
 	] )
 	.constant( 'CONSTANTS', {
 		DB_NAME:       'eventReminder.db',
-		DEFAULT_STATE: 'eventList'
+		DEFAULT_STATE: 'eventList',
+		PICTURES:      {
+			HEIGHT: 100,
+			WIDTH:  100
+		}
 	} )
 	.config( config )
 	.run( run );
@@ -23,6 +29,6 @@ function run( $state, CONSTANTS, SQLiteFactory ) {
 	document.addEventListener( "deviceready", function () {
 		console.log( 'Ready' );
 		//SQLiteFactory.initDb();
-		$state.go( CONSTANTS.DEFAULT_STATE );
+		//$state.go( CONSTANTS.DEFAULT_STATE );
 	} );
 }

@@ -7,7 +7,7 @@
  *
  */
 
-function iEvent( date, title, text ) {
+function iEvent( title, date, text ) {
 	this.date     = date;
 	this.title    = title;
 	this.text     = text;

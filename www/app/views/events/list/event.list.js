@@ -15,12 +15,14 @@ angular
 	.config( function ( $stateProvider ) {
 		$stateProvider.state( 'eventList', {
 			url:          '/events',
-			templateUrl:  'views/events/event.list.html',
+			templateUrl:  'views/events/list/event.list.html',
 			controller:   EventListCtrl,
 			controllerAs: 'eventListCtrl'
 		} );
 	} );
 
-function EventListCtrl() {
+function EventListCtrl( CONSTANTS ) {
+	var $this = this;
 	
+	$this.picSize = CONSTANTS.PICTURES;
 }
