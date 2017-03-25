@@ -6,18 +6,23 @@ angular
 		'ui.router',
 		'ngRoute',
 		'ngCordova',
-		'myApp.view1'
+		'er.event.list'
 	] )
-	.config( function ( $locationProvider ) {
-		$locationProvider.hashPrefix( '!' );
-	} )
 	.constant( 'CONSTANTS', {
-		DB_NAME: 'eventReminder.db'
+		DB_NAME:       'eventReminder.db',
+		DEFAULT_STATE: 'eventList'
 	} )
-	.controller( function ( SQLiteFactory ) {
-		document.addEventListener( "deviceready", function () {
-			console.log( 'Ready' );
-			SQLiteFactory.initDb();
-			
-		} );
+	.config( config )
+	.run( run );
+
+function config( $locationProvider ) {
+	$locationProvider.hashPrefix( '!' );
+}
+
+function run( $state, CONSTANTS, SQLiteFactory ) {
+	document.addEventListener( "deviceready", function () {
+		console.log( 'Ready' );
+		//SQLiteFactory.initDb();
+		$state.go( CONSTANTS.DEFAULT_STATE );
 	} );
+}

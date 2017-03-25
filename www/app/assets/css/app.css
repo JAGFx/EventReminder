@@ -1,0 +1,6 @@
+/* app css stylesheet */
+
+ui-view {
+	display:    block;
+	margin-top: 51px;
+}

@@ -14,7 +14,7 @@ angular
 	.factory( 'SQLiteFactory', function ( $cordovaSQLite, CONSTANTS ) {
 		var $this = this;
 		
-		$this.db = $cordovaSQLite.openDB( { name: CONSTANTS.DB_NAME } );
+		//$this.db = $cordovaSQLite.openDB( { name: CONSTANTS.DB_NAME, iosDatabaseLocation: 'default' } );
 		
 		$this.initDb = function () {
 			var queryContact = "CREATE TABLE IF NOT EXISTS Contact (lastname, firstname, tel)";
