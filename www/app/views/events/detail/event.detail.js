@@ -14,7 +14,7 @@ angular
 	
 	.config( function ( $stateProvider ) {
 		$stateProvider.state( 'eventDetail', {
-			url:          '/events/{id:string}',
+			url:          '/events/{id:string}/',
 			templateUrl:  'views/events/detail/event.detail.html',
 			controller:   EventDetailCtrl,
 			controllerAs: 'eventDetailCtrl',

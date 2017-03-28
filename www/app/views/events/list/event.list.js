@@ -24,5 +24,6 @@ angular
 function EventListCtrl( CONSTANTS ) {
 	var $this = this;
 	
+	$this.events = [];
 	$this.picSize = CONSTANTS.PICTURES;
 }

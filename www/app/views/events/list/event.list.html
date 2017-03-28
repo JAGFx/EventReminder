@@ -1,4 +1,7 @@
 <section id="events-list" class="col-xs-12" >
-	<h1 >EventList</h1 >
-
+	<h1 >EventList
+		<a ui-sref="eventNew" class="btn btn-primary pull-right" >New event</a >
+	</h1 >
+	
+	<eventcard ng-repeat="event in eventListCtrl.events" event="event" ></eventcard >
 </section >

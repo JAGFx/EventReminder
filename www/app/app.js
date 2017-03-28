@@ -8,7 +8,8 @@ angular
 		'ngCordova',
 		
 		'er.event.list',
-		'er.event.detail'
+		'er.event.detail',
+		'er.event.new'
 	] )
 	.constant( 'CONSTANTS', {
 		DB_NAME:       'eventReminder.db',
