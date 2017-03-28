@@ -8,6 +8,7 @@
  */
 
 function iEvent( title, date, text ) {
+	this.id = null;
 	this.date     = date;
 	this.title    = title;
 	this.text     = text;
@@ -17,4 +18,8 @@ function iEvent( title, date, text ) {
 		lat:  0,
 		long: 0
 	};
+	
+	this.generateID = function () {
+		this.id = Math.random().toString( 16 ).substring( 2, 15 ) + Math.random().toString( 16 ).substring( 2, 15 );
+	}
 }

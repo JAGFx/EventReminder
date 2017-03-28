@@ -2,29 +2,28 @@
 	<div class="panel-heading" >
 		<a ui-sref="eventDetail({ id: 1 })" >{{ $ctrl.event.title }}</a >
 		<span class="label label-primary pull-right" >{{ $ctrl.event.date }}</span >
-		<span class="label label-default pull-right" ng-if="$ctrl.event.location">Lat: {{ $ctrl.event.location.lat }} - Long: {{ $ctrl.event.location.long }}</span>
+		<span class="label label-default pull-right" ng-if="$ctrl.event.location" >Lat: {{ $ctrl.event.location.lat }} - Long: {{ $ctrl.event.location.long }}</span >
 	</div >
 	<div class="panel-body" >
 		<p >{{ $ctrl.event.text }}</p >
 		<hr ng-if="$ctrl.full" />
 		
-		<h4 ng-if="$ctrl.full">Contacts pined
-			<button class="btn btn-primary btn-xs pull-right" type="button" data-toggle="collapse" data-target="#contactEvent-000" aria-expanded="false" aria-controls="contactEvent-000" >
+		<h4 ng-if="$ctrl.full" >Contacts pined
+			<button class="btn btn-primary btn-xs pull-right" type="button" data-toggle="collapse" data-target="#contactEvent-{{ $ctrl.event.id }}" aria-expanded="false" aria-controls="contactEvent-{{ $ctrl.event.id }}" >
 				+
 			</button >
 		</h4 >
-		<ul class="list-group collapse" id="contactEvent-000" ng-if="$ctrl.full">
+		<ul class="list-group collapse" id="contactEvent-{{ $ctrl.event.id }}" ng-if="$ctrl.full" >
 			<li class="list-group-item" ng-repeat="contact in $ctrl.event.contacts" >{{ contact.toString() }}</li >
 		</ul >
 		
 		<hr ng-if="$ctrl.full" />
-		<h4 ng-if="$ctrl.full">Pictures taked
-			<button class="btn btn-primary btn-xs pull-right" type="button" data-toggle="collapse" data-target="#picsEvent-000" aria-expanded="false" aria-controls="picsEvent-000" >
+		<h4 ng-if="$ctrl.full" >Pictures taked
+			<button class="btn btn-primary btn-xs pull-right" type="button" data-toggle="collapse" data-target="#picsEvent-{{ $ctrl.event.id }}" aria-expanded="false" aria-controls="picsEvent-{{ $ctrl.event.id }}" >
 				+
 			</button >
 		</h4 >
-		<div class="collapse text-center" id="picsEvent-000" ng-if="$ctrl.full">
-			<img src="" alt="" width="{{ $ctrl.picSize.WIDTH }}" height="{{ $ctrl.picSize.HEIGHT }}" >
+		<div class="collapse text-center" id="picsEvent-{{ $ctrl.event.id }}" ng-if="$ctrl.full" >
+			<img ng-repeat="picture in $ctrl.event.pictures" ng-src="{{ picture.value }}" alt="{{ picture.event.title }} - pic# {{ $index }}" width="{{ $ctrl.picSize.WIDTH }}" height="{{ $ctrl.picSize.HEIGHT }}" >
 		</div >
 	</div >
-</div >
