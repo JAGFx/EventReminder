@@ -22,6 +22,7 @@ angular
 				event: function ( $stateParams ) {
 					console.log( $stateParams.id );
 					
+					// TODO Fetch from DB
 					var e      = new iEvent( 'Plop', '2017-04-24', 'un jolie petit texte' );
 					e.location = {
 						lat:  45.255454545454545484845,

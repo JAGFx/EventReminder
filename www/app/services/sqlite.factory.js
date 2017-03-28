@@ -19,7 +19,7 @@ angular
 		$this.initDb = function () {
 			var queryContact = "CREATE TABLE IF NOT EXISTS Contact (lastname, firstname, tel)";
 			var queryEvent   = "CREATE TABLE IF NOT EXISTS Event (date, title, text, lat, long)";
-			var queryPicture = "CREATE TABLE IF NOT EXISTS Picture (lastname, firstname, tel)";
+			var queryPicture = "CREATE TABLE IF NOT EXISTS Picture (value, eventID)";
 			
 			$this.execute( queryEvent, [] )
 				.then( function ( res ) {

@@ -29,6 +29,8 @@ function config( $locationProvider ) {
 function run( $state, CONSTANTS, SQLiteFactory ) {
 	document.addEventListener( "deviceready", function () {
 		console.log( 'Ready' );
+		
+		// FIXME Uncomment befor pass in Android device
 		//SQLiteFactory.initDb();
 		//$state.go( CONSTANTS.DEFAULT_STATE );
 	} );

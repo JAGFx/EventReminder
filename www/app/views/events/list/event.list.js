@@ -24,6 +24,7 @@ angular
 function EventListCtrl( CONSTANTS ) {
 	var $this = this;
 	
+	// TODO Fetch from DB
 	$this.events = [];
 	$this.picSize = CONSTANTS.PICTURES;
 }
