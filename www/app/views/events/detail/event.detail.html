@@ -1,14 +1,14 @@
 <section id="events-list" class="col-xs-12" >
 	<h1 >EventDetail
 		
-		<a href="" class="btn btn-info pull-right" >Take pic</a >
+		<button class="btn btn-info pull-right" ng-click="eventDetailCtrl.takePicture()" >Take pic</button >
 		<div class="btn-group pull-right" >
 			<button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
 				Pin contact <span class="caret" ></span >
 			</button >
 			<ul class="dropdown-menu" >
 				<li ><a href="#" >From app</a ></li >
-				<li ><a href="#" >From mobile</a ></li >
+				<li ><a href="" ng-click="eventDetailCtrl.pinContactFromMobile()" >From mobile</a ></li >
 				<li ><a href="#" >Create new</a ></li >
 			</ul >
 		</div >

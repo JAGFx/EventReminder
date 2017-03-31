@@ -44,8 +44,35 @@ angular
 		} );
 	} );
 
-function EventDetailCtrl( CONSTANTS, event ) {
+function EventDetailCtrl( event, PictureFactory, ContactFactory ) {
 	var $this = this;
 	
 	$this.event = event;
+	
+	$this.takePicture = function () {
+		console.debug( 'TAKE PIC' );
+		// TODO Test on mobile
+		
+		PictureFactory
+			.takePicture( $this.event.id )
+			.then( function ( data ) {
+				console.log( data );
+			}, function ( err ) {
+				console.error( err.message );
+			} );
+	};
+	
+	$this.pinContactFromMobile = function () {
+		console.debug( 'PIN CONTACT MOBILE' );
+		// TODO Test on mobile
+		
+		ContactFactory
+			.pinContactFromMobile( $this.event )
+			.then( function ( contact ) {
+				$this.event.contacts.push( contact );
+				console.log( 'Updated' );
+			}, function ( err ) {
+				console.error( err.message );
+			} );
+	};
 }

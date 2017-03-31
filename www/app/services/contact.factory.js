@@ -11,7 +11,7 @@
 
 angular
 	.module( 'eventReminderApp' )
-	.factory( 'ContactFactory', function () {
+	.factory( 'ContactFactory', function ( $cordovaContacts ) {
 		var $this = this;
 		
 		$this.newContact = function ( lastname, firstname, tel ) {
@@ -22,6 +22,21 @@ angular
 		
 		this.updateContact = function ( contact ) {
 			// TODO Update in DB;
+		};
+		
+		
+		$this.pinContactFromMobile = function ( event ) {
+			return $cordovaContacts
+				.pickContact()
+				.then( function ( contactPicked ) {
+					var contact = new Contact( 'last', 'first', 'mail' );
+					
+					event.contacts.push( contact );
+					// TODO Update Event
+					
+					console.log( contactPicked );
+					return contact;
+				} );
 		};
 		
 		return $this;
