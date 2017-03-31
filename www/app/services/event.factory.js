@@ -11,7 +11,7 @@
 
 angular
 	.module( 'eventReminderApp' )
-	.factory( 'EventFactory', function () {
+	.factory( 'EventFactory', function ( $cordovaGeolocation ) {
 		var $this = this;
 		
 		$this.newEvent = function ( title, text ) {
@@ -27,7 +27,22 @@ angular
 		};
 		
 		$this.locateEvent = function ( event ) {
-			// TODO Use CordovaGeolocation
+			var posOptions = { timeout: 10000, enableHighAccuracy: true };
+			
+			return $cordovaGeolocation
+				.getCurrentPosition( posOptions )
+				.then( function ( position ) {
+					console.log( 'Init', position );
+					event.geoloc = {
+						lat:  position.coords.latitude,
+						long: position.coords.longitude
+					};
+					
+					return event;
+				}, function ( err ) {
+					console.error( err.message );
+				} );
+			
 			// TODO Update in DB
 		};
 		

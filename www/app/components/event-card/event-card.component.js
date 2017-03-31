@@ -20,9 +20,20 @@ angular
 		}
 	} );
 
-function EventCardController( CONSTANTS ) {
+function EventCardController( CONSTANTS, EventFactory ) {
 	var $this = this;
 	
 	$this.full    = $this.full || false;
 	$this.picSize = CONSTANTS.PICTURES;
+	
+	$this.locateEvent = function () {
+		console.debug( 'LOCATE EVENT' );
+		// TODO Test on mobile
+		
+		EventFactory
+			.locateEvent( $this.event )
+			.then( function ( event ) {
+				$this.event = event;
+			} );
+	};
 }
