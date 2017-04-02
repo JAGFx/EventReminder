@@ -15,7 +15,7 @@ angular
 		templateUrl: 'components/event-card/event-card.component.html',
 		controller:  EventCardController,
 		bindings:    {
-			event: '<',
+			event: '=',
 			full:  '<'
 		}
 	} );
@@ -27,13 +27,10 @@ function EventCardController( CONSTANTS, EventFactory ) {
 	$this.picSize = CONSTANTS.PICTURES;
 	
 	$this.locateEvent = function () {
-		console.debug( 'LOCATE EVENT' );
+		console.log( 'LOCATE EVENT' );
 		// TODO Test on mobile
 		
 		EventFactory
-			.locateEvent( $this.event )
-			.then( function ( event ) {
-				$this.event = event;
-			} );
+			.locateEvent( $this.event );
 	};
 }

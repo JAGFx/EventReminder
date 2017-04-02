@@ -14,14 +14,18 @@ function iEvent( title, date, text ) {
 	this.text     = text;
 	this.contacts = [];
 	this.pictures = [];
-	this.location = {
-		lat:  0,
-		long: 0
-	};
+	this.location = {};
 	
 	this.generateID = function () {
 		this.id = Math.random().toString( 16 ).substring( 2, 15 ) + Math.random().toString( 16 ).substring( 2, 15 );
-	}
+	};
+	
+	this.setLocation = function ( lat, long ) {
+		this.location = {
+			lat:  lat,
+			long: long
+		};
+	};
 	
 	// TODO Method to init event
 	// TODO Method to set default date

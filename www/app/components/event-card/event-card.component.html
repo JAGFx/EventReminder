@@ -2,8 +2,8 @@
 	<div class="panel-heading" >
 		<a ui-sref="eventDetail({ id: 1 })" >{{ $ctrl.event.title }}</a >
 		<span class="label label-primary pull-right" >{{ $ctrl.event.date }}</span >
-		<span class="label label-default pull-right" ng-if="$ctrl.event.location" >Lat: {{ $ctrl.event.location.lat }} - Long: {{ $ctrl.event.location.long }}</span >
-		<button ng-if="!$ctrl.event.location" ng-click="$ctrl.locateEvent()" >Locate</button >
+		<span class="label label-default pull-right" ng-if="$ctrl.event.location.lat" >Lat: {{ $ctrl.event.location.lat }} - Long: {{ $ctrl.event.location.long }}</span >
+		<button class="btn btn-xs btn-default pull-right" ng-if="!$ctrl.event.location.lat" ng-click="$ctrl.locateEvent()" >Locate</button >
 	</div >
 	<div class="panel-body" >
 		<p >{{ $ctrl.event.text }}</p >
@@ -28,3 +28,4 @@
 			<img ng-repeat="picture in $ctrl.event.pictures" ng-src="{{ picture.value }}" alt="{{ picture.event.title }} - pic# {{ $index }}" width="{{ $ctrl.picSize.WIDTH }}" height="{{ $ctrl.picSize.HEIGHT }}" >
 		</div >
 	</div >
+</div >

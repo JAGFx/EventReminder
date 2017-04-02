@@ -29,21 +29,17 @@ angular
 		$this.locateEvent = function ( event ) {
 			var posOptions = { timeout: 10000, enableHighAccuracy: true };
 			
-			return $cordovaGeolocation
+			$cordovaGeolocation
 				.getCurrentPosition( posOptions )
 				.then( function ( position ) {
 					console.log( 'Init', position );
-					event.geoloc = {
-						lat:  position.coords.latitude,
-						long: position.coords.longitude
-					};
+					event.setLocation( position.coords.latitude, position.coords.longitude );
 					
-					return event;
+					// TODO Update in DB
+					
 				}, function ( err ) {
 					console.error( err.message );
 				} );
-			
-			// TODO Update in DB
 		};
 		
 		$this.findAllEvents = function () {
