@@ -10,9 +10,14 @@
 function Contact( lastname, firstname, email ) {
 	this.lastname  = lastname;
 	this.firstname = firstname;
-	this.email = email;
+	this.email  = email;
+	this.mobile = null;
 	
 	this.toString = function () {
 		return this.firstname + ' ' + this.lastname + ' <' + this.email + '>';
-	}
+	};
+	
+	this.setMobile = function ( mobile ) {
+		this.mobile = mobile;
+	};
 }

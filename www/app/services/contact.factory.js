@@ -26,16 +26,15 @@ angular
 		
 		
 		$this.pinContactFromMobile = function ( event ) {
-			return $cordovaContacts
+			$cordovaContacts
 				.pickContact()
 				.then( function ( contactPicked ) {
+					console.log( contactPicked );
 					var contact = new Contact( 'last', 'first', 'mail' );
+					contact.setMobile( 0 );
 					
 					event.contacts.push( contact );
 					// TODO Update Event
-					
-					console.log( contactPicked );
-					return contact;
 				} );
 		};
 		
