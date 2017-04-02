@@ -1,9 +1,11 @@
 <div class="panel panel-default" >
 	<div class="panel-heading" >
 		<a ui-sref="eventDetail({ id: 1 })" >{{ $ctrl.event.title }}</a >
-		<span class="label label-primary pull-right" >{{ $ctrl.event.date }}</span >
-		<span class="label label-default pull-right" ng-if="$ctrl.event.location.lat" >Lat: {{ $ctrl.event.location.lat }} - Long: {{ $ctrl.event.location.long }}</span >
-		<button class="btn btn-xs btn-default pull-right" ng-if="!$ctrl.event.location.lat" ng-click="$ctrl.locateEvent()" >Locate</button >
+		<div class="pull-right" >
+			<span class="label label-primary" >{{ $ctrl.event.date }}</span >
+			<span class="label label-default" ng-if="$ctrl.event.location.lat" >Lat: {{ $ctrl.event.location.lat }} - Long: {{ $ctrl.event.location.long }}</span >
+			<button class="btn btn-xs btn-default" ng-if="!$ctrl.event.location.lat" ng-click="$ctrl.locateEvent()" >Locate</button >
+		</div >
 	</div >
 	<div class="panel-body" >
 		<p >{{ $ctrl.event.text }}</p >
@@ -15,7 +17,9 @@
 			</button >
 		</h4 >
 		<ul class="list-group collapse" id="contactEvent-{{ $ctrl.event.id }}" ng-if="$ctrl.full" >
-			<li class="list-group-item" ng-repeat="contact in $ctrl.event.contacts" >{{ contact.toString() }}</li >
+			<li class="list-group-item" ng-repeat="contact in $ctrl.event.contacts" >{{ contact.toString() }}
+				<a ng-if="contact.mobile" ng-href="tel:{{ contact.mobile }}" class="btn btn-xs btn-success" >Call</a >
+			</li >
 		</ul >
 		
 		<hr ng-if="$ctrl.full" />

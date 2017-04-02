@@ -34,6 +34,7 @@ angular
 					e.pictures.push( pic );
 					
 					var c = new Contact( 'SMITH', 'Emmanuel', 'emmanuel.smith@jagfx.fr' );
+					c.setMobile( '0620133854' );
 					e.contacts.push( c );
 					
 					console.log( e );
