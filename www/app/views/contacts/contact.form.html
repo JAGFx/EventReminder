@@ -1,0 +1,33 @@
+<section class="col-xs-12" >
+	<h1 >Contact - {{ contactFormCtrl.type }}</h1 >
+	
+	<form name="contactForm" ng-submit="contactFormCtrl.validate( contactForm.$valid )" novalidate >
+		<pre >{{ contactFormCtrl.contact | json }}</pre >
+		
+		<div class="alert alert-warning alert-dismissible" role="alert" ng-if="contactForm.$submitted && contactForm.$invalid" >
+			<button type="button" class="close" data-dismiss="alert" aria-label="Close" >
+				<span aria-hidden="true" >&times;</span ></button >
+			<strong >Warning!</strong > You must set a lastname and firstname to create new contact.
+		</div >
+		
+		<div class="form-group" ng-class="{ 'has-error' : contactForm.lastname.$invalid && ( contactForm.$submitted || !contactForm.lastname.$pristine ) }" >
+			<label for="lastname" >Lastname</label >
+			<input type="text" id="lastname" class="form-control" name="lastname" ng-model="contactFormCtrl.contact.lastname" required >
+		</div >
+		<div class="form-group" ng-class="{ 'has-error' : contactForm.firstname.$invalid && ( contactForm.$submitted || !contactForm.firstname.$pristine ) }" >
+			<label for="firstname" >Firstname</label >
+			<input type="text" id="firstname" class="form-control" name="firstname" ng-model="contactFormCtrl.contact.firstname" required >
+		</div >
+		<div class="form-group" ng-class="{ 'has-error' : contactForm.email.$invalid && ( contactForm.$submitted || !contactForm.email.$pristine ) }" >
+			<label for="email" >Email</label >
+			<input type="email" id="email" class="form-control" name="email" ng-model="contactFormCtrl.contact.email" >
+		</div >
+		<div class="form-group" ng-class="{ 'has-error' : contactForm.mobile.$invalid && ( contactForm.$submitted || !contactForm.mobile.$pristine ) }" >
+			<label for="mobile" >Mobile</label >
+			<input type="tel" id="mobile" class="form-control" name="mobile" ng-model="contactFormCtrl.contact.mobile" >
+		</div >
+		
+		<button type="submit" class="btn btn-primary" >{{ contactFormCtrl.type }}</button >
+		<button type="reset" class="btn btn-default" >Reset</button >
+	</form >
+</section >

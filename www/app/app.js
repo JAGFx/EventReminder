@@ -9,7 +9,9 @@ angular
 		
 		'er.event.list',
 		'er.event.detail',
-		'er.event.new'
+		'er.event.new',
+		
+		'er.contact.new'
 	] )
 	.constant( 'CONSTANTS', {
 		DB_NAME:       'eventReminder.db',

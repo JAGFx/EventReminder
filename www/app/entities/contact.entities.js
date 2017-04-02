@@ -8,6 +8,7 @@
  */
 
 function Contact( lastname, firstname, email ) {
+	this.id = null;
 	this.lastname  = lastname;
 	this.firstname = firstname;
 	this.email  = email;
@@ -15,6 +16,10 @@ function Contact( lastname, firstname, email ) {
 	
 	this.toString = function () {
 		return this.firstname + ' ' + this.lastname + ' <' + this.email + '>';
+	};
+	
+	this.generateID = function () {
+		this.id = Math.random().toString( 16 ).substring( 2, 15 ) + Math.random().toString( 16 ).substring( 2, 15 );
 	};
 	
 	this.setMobile = function ( mobile ) {
