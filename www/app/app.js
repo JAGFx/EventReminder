@@ -11,6 +11,7 @@ angular
 		'er.event.detail',
 		'er.event.form',
 		
+		'er.contact.list',
 		'er.contact.form'
 	] )
 	.constant( 'CONSTANTS', {

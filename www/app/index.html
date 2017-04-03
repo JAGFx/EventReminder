@@ -39,9 +39,11 @@
 				<!-- Collect the nav links, forms, and other content for toggling -->
 				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" >
 					<ul class="nav navbar-nav" >
-						<li class="active" ><a ui-sref="eventList" >Events <span class="sr-only" >(current)</span ></a >
+						<li ui-sref-active="active" ><a ui-sref="eventList" >Events
+							<span class="sr-only" >(current)</span ></a >
 						</li >
-						<li ><a >Contacts</a ></li >
+						<li ui-sref-active="active" ><a ui-sref="contactList" >Contacts</a >
+						</li >
 					</ul >
 				</div ><!-- /.navbar-collapse -->
 			</div ><!-- /.container-fluid -->
@@ -82,7 +84,8 @@
 		<script src="views/events/detail/event.detail.js" ></script >
 		<script src="views/events/form/event.form.js" ></script >
 		
-		<script src="views/contacts/form/contact.new.js" ></script >
+		<script src="views/contacts/list/contact.list.js" ></script >
+		<script src="views/contacts/form/contact.form.js" ></script >
 		
 		<script src="components/event-card/event-card.component.js" ></script >
 	</body >
