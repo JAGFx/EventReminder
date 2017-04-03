@@ -16,13 +16,13 @@ angular
 		$stateProvider
 			.state( 'eventNew', {
 				url:          '/events/new',
-				templateUrl:  'views/events/event.form.html',
+				templateUrl:  'views/events/form/event.form.html',
 				controller:   EventNewCtrl,
 				controllerAs: 'eventFormCtrl'
 			} )
 			.state( 'eventEdit', {
 				url:          '/events/{id:string}/edit',
-				templateUrl:  'views/events/event.form.html',
+				templateUrl:  'views/events/form/event.form.html',
 				controller:   EventEditCtrl,
 				controllerAs: 'eventFormCtrl',
 				resolve:      {

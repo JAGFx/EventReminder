@@ -11,7 +11,7 @@ angular
 		'er.event.detail',
 		'er.event.form',
 		
-		'er.contact.new'
+		'er.contact.form'
 	] )
 	.constant( 'CONSTANTS', {
 		DB_NAME:       'eventReminder.db',
