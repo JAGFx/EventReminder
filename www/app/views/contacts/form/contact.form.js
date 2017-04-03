@@ -14,20 +14,41 @@ angular
 	
 	.config( function ( $stateProvider ) {
 		$stateProvider
-			.state( 'contactNewPin', {
-				url:          '/contacts/new/pinTo/{id:string}/',
+			.state( 'contactNew', {
+				url:          '/contacts/new',
 				templateUrl:  'views/contacts/form/contact.form.html',
 				controller:   ContactNewCtrl,
 				controllerAs: 'contactFormCtrl',
 				resolve:      {
-					event: function ( $stateParams ) {
+					contact: function () {
+						var c = new iContact( '', '', '' );
+						c.generateID();
+						
+						return c;
+					}
+				}
+			} )
+			
+			.state( 'contactNewPin', {
+				url:          '/contacts/new/pinTo/{id:string}/',
+				templateUrl:  'views/contacts/form/contact.form.html',
+				controller:   ContactNewPinCtrl,
+				controllerAs: 'contactFormCtrl',
+				resolve:      {
+					event:   function ( $stateParams ) {
 						console.log( $stateParams.id );
 						
 						// TODO Fetch from DB
-						var e = new iEvent( 'Plop', '2017-04-24', 'un jolie petit texte' );
+						var e = new iEvent( 'Plop', '2017-04-24 17:24:32', 'un jolie petit texte' );
 						e.generateID();
 						
 						return e;
+					},
+					contact: function () {
+						var c = new iContact();
+						c.generateID();
+						
+						return c;
 					}
 				}
 			} )
@@ -42,7 +63,7 @@ angular
 						console.log( $stateParams.id );
 						
 						// TODO Fetch from DB
-						var c = new Contact( 'lstname', 'fstname', 'mail' );
+						var c = new iContact( 'lstname', 'fstname', 'mail' );
 						c.generateID();
 						
 						return c;
@@ -51,7 +72,7 @@ angular
 			} );
 	} );
 
-function ContactNewCtrl( event ) {
+function ContactNewPinCtrl( event, contact ) {
 	var $this = this;
 	
 	$this.validate = function ( valid ) {
@@ -65,8 +86,37 @@ function ContactNewCtrl( event ) {
 	$this.init = function () {
 		$this.type = 'Pin';
 		
-		$this.contact = new Contact( '', '', '' );
-		$this.contact.generateID();
+		$this.contact = contact;
+	};
+	
+	$this.init();
+}
+
+function ContactNewCtrl( contact, ContactFactory ) {
+	var $this     = this;
+	$this.contact = {};
+	
+	$this.validate = function ( valid ) {
+		if ( valid ) {
+			// TODO Set in DB
+			// TODO TOAST
+			ContactFactory
+				.insertContact( $this.contact )
+				.then( function ( data ) {
+					console.log( 'Inserted' );
+				}, function ( err ) {
+					console.error( err.message );
+				} );
+		}
+	};
+	
+	$this.init = function () {
+		console.log( 'iContact' );
+		$this.type = 'Create';
+		
+		/*var c = new iContact();
+		 c.generateID();*/
+		$this.contact = contact;
 	};
 	
 	$this.init();

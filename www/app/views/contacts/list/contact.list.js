@@ -16,13 +16,22 @@ angular
 		} );
 	} );
 
-function ContactListCtrl( CONSTANTS ) {
+function ContactListCtrl( ContactFactory ) {
 	var $this = this;
 	
 	// TODO Fetch from DB
 	$this.contacts = [];
 	
-	var c = new Contact( 'lstname', 'fstname', 'mobile' );
-	c.generateID();
-	$this.contacts.push( c );
+	$this.init = function () {
+		ContactFactory
+			.findAll()
+			.then( function ( contacts ) {
+				console.log( contacts );
+				$this.contacts = contacts;
+			}, function ( err ) {
+				console.error( err.message );
+			} );
+	};
+	
+	$this.init();
 }

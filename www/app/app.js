@@ -34,7 +34,7 @@ function run( $state, CONSTANTS, SQLiteFactory ) {
 		console.log( 'Ready' );
 		
 		// FIXME Uncomment befor pass in Android device
-		//SQLiteFactory.initDb();
+		SQLiteFactory.initDb();
 		//$state.go( CONSTANTS.DEFAULT_STATE );
 	} );
 }

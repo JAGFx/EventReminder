@@ -14,12 +14,18 @@ angular
 	.factory( 'SQLiteFactory', function ( $cordovaSQLite, CONSTANTS ) {
 		var $this = this;
 		
-		//$this.db = $cordovaSQLite.openDB( { name: CONSTANTS.DB_NAME, iosDatabaseLocation: 'default' } );
+		// FIXME Uncomment to test on mobile
+		$this.db = null;
 		
 		$this.initDb = function () {
-			var queryContact = "CREATE TABLE IF NOT EXISTS Contact (lastname, firstname, tel)";
-			var queryEvent   = "CREATE TABLE IF NOT EXISTS Event (date, title, text, lat, long)";
+			var queryContact = "CREATE TABLE IF NOT EXISTS iContact (id, lastname, firstname, email, mobile)";
+			var queryEvent   = "CREATE TABLE IF NOT EXISTS Event (id date, title, text, lat, long)";
 			var queryPicture = "CREATE TABLE IF NOT EXISTS Picture (value, eventID)";
+			
+			$this.db         = $cordovaSQLite.openDB( {
+				name:                CONSTANTS.DB_NAME,
+				iosDatabaseLocation: 'default'
+			} );
 			
 			$this.execute( queryEvent, [] )
 				.then( function ( res ) {
@@ -30,9 +36,9 @@ angular
 			
 			$this.execute( queryContact, [] )
 				.then( function ( res ) {
-					console.log( 'SUCCESS - Contact', res );
+					console.log( 'SUCCESS - iContact', res );
 				}, function ( err ) {
-					console.error( 'ERROR - Contact', err.message );
+					console.error( 'ERROR - iContact', err.message );
 				} );
 			
 			$this.execute( queryPicture, [] )

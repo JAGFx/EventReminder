@@ -7,7 +7,7 @@
  *
  */
 
-function Contact( lastname, firstname, email ) {
+function iContact( lastname, firstname, email ) {
 	this.id = null;
 	this.lastname  = lastname;
 	this.firstname = firstname;

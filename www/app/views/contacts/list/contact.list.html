@@ -1,20 +1,18 @@
 <section class="col-xs-12" >
 	<h1 >ContactList
-		<a ui-sref="eventNew" class="btn btn-primary pull-right" >New contact</a >
+		<a ui-sref="contactNew" class="btn btn-primary pull-right" >New contact</a >
 	</h1 >
 	
 	<table class="table table-responsive, table-striped" ng-if="contactListCtrl.contacts" >
 		<tr >
 			<th >Lastname</th >
 			<th >Firstname</th >
-			<th >Email</th >
 			<th >Mobile</th >
 			<th ></th >
 		</tr >
 		<tr ng-repeat="contact in contactListCtrl.contacts" >
 			<td >{{ contact.lastname }}</td >
 			<td >{{ contact.firstname }}</td >
-			<td >{{ contact.email }}</td >
 			<td >{{ contact.mobile }}</td >
 			<td >
 				<a ui-sref="contactEdit({ id: contact.id })" class="btn btn-primary btn-xs" >Edit</a >
