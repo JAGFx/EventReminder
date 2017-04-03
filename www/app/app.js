@@ -9,7 +9,7 @@ angular
 		
 		'er.event.list',
 		'er.event.detail',
-		'er.event.new',
+		'er.event.form',
 		
 		'er.contact.new'
 	] )
