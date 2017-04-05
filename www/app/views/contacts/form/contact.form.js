@@ -59,14 +59,16 @@ angular
 				controller:   ContactEdtiCtrl,
 				controllerAs: 'contactFormCtrl',
 				resolve:      {
-					contact: function ( $stateParams ) {
+					contact: function ( $stateParams, ContactFactory ) {
 						console.log( $stateParams.id );
 						
-						// TODO Fetch from DB
-						var c = new iContact( 'lstname', 'fstname', 'mail' );
-						c.generateID();
-						
-						return c;
+						return ContactFactory
+							.findOneById( $stateParams.id );
+						/*// TODO Fetch from DB
+						 var c = new iContact( 'lstname', 'fstname', 'mail' );
+						 c.generateID();
+						 
+						 return c;*/
 					}
 				}
 			} );
@@ -122,13 +124,13 @@ function ContactNewCtrl( contact, ContactFactory ) {
 	$this.init();
 }
 
-function ContactEdtiCtrl( contact ) {
+function ContactEdtiCtrl( contact, ContactFactory ) {
 	var $this = this;
 	
 	$this.validate = function ( valid ) {
 		if ( valid ) {
 			// TODO Update in DB
-			console.log( $this.contact );
+			ContactFactory.updateContact( $this.contact );
 		}
 	};
 	

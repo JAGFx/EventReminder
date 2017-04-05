@@ -20,7 +20,7 @@ angular
 		$this.initDb = function () {
 			var queryContact = "CREATE TABLE IF NOT EXISTS iContact (id, lastname, firstname, email, mobile)";
 			var queryEvent   = "CREATE TABLE IF NOT EXISTS Event (id date, title, text, lat, long)";
-			var queryPicture = "CREATE TABLE IF NOT EXISTS Picture (value, eventID)";
+			var queryPicture = "CREATE TABLE IF NOT EXISTS Picture (value blob, eventID)";
 			
 			$this.db         = $cordovaSQLite.openDB( {
 				name:                CONSTANTS.DB_NAME,

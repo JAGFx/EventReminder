@@ -16,19 +16,31 @@ angular
 		
 		$this.insertContact = function ( contact ) {
 			var query = 'INSERT INTO iContact VALUES (?, ?, ?, ?, ?)';
+			var params = [ contact.id, contact.lastname, contact.firstname, contact.email, contact.mobile ];
+			// TODO Dialog + Toast
 			
 			return SQLiteFactory
-				.execute( query, [ contact.id, contact.lastname, contact.firstname, contact.email, contact.mobile ] )
+				.execute( query, params )
 				.then( function ( data ) {
 					console.log( data );
 				}, function ( err ) {
 					console.error( err.message );
 				} );
-			// TODO Insert in DB
 		};
 		
 		$this.updateContact = function ( contact ) {
-			// TODO Update in DB;
+			var query  = 'UPDATE iContact SET lastname = ?, firstname = ?, email = ?, mobile = ? WHERE id = ?'
+			var params = [ contact.lastname, contact.firstname, contact.email, contact.mobile, contact.id ];
+			
+			// TODO Dialog + Toast
+			
+			SQLiteFactory
+				.execute( query, params )
+				.then( function ( data ) {
+					console.log( data );
+				}, function ( err ) {
+					console.error( err.message );
+				} );
 		};
 		
 		$this.findAll = function () {
@@ -36,9 +48,29 @@ angular
 			
 			return SQLiteFactory
 				.execute( query, [] )
-				.then( function ( contacts ) {
-					console.log( contacts.rows.item( 1 ) );
-					return contacts.rows;
+				.then( function ( rows ) {
+					console.log( rows.rows.item( 1 ) );
+					var contacts = [];
+					
+					for ( var i = 0; i < rows.rows.length; i++ )
+						contacts.push( rows.rows.item( i ) );
+					
+					return contacts;
+				}, function ( err ) {
+					console.error( err.message );
+					return [];
+				} );
+		};
+		
+		$this.findOneById = function ( id ) {
+			var query  = 'SELECT * FROM iContact WHERE id = ?';
+			var params = [ id ];
+			
+			return SQLiteFactory
+				.execute( query, params )
+				.then( function ( rows ) {
+					console.log( rows );
+					return rows.rows.item( 0 );
 				}, function ( err ) {
 					console.error( err.message );
 					return [];
@@ -47,6 +79,8 @@ angular
 		
 		
 		$this.pinContactFromMobile = function ( event ) {
+			
+			// TODO Dialog + Toast
 			$cordovaContacts
 				.pickContact()
 				.then( function ( contactPicked ) {
@@ -56,6 +90,8 @@ angular
 					
 					event.contacts.push( contact );
 					// TODO Update Event
+				}, function ( err ) {
+					console.error( err.message );
 				} );
 		};
 		
