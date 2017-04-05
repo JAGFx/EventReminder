@@ -19,7 +19,6 @@ angular
 function ContactListCtrl( ContactFactory ) {
 	var $this = this;
 	
-	// TODO Fetch from DB
 	$this.contacts = [];
 	
 	$this.init = function () {
@@ -31,6 +30,16 @@ function ContactListCtrl( ContactFactory ) {
 			}, function ( err ) {
 				console.error( err.message );
 			} );
+	};
+	
+	$this.deleteContact = function ( contact ) {
+		ContactFactory
+			.deleteContact( contact.id )
+			.then( function () {
+				// FIXME : Dont remove tr
+				var idx = $this.contacts.indexOf( contact );
+				delete $this.contacts[ idx ];
+			} )
 	};
 	
 	$this.init();

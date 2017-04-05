@@ -43,8 +43,25 @@ angular
 				} );
 		};
 		
+		$this.deleteContact = function ( id ) {
+			var query  = 'DELETE FROM iContact WHERE id = ?';
+			var params = [ id ];
+			
+			// TODO Dialog + Toast
+			
+			return SQLiteFactory
+				.execute( query, params )
+				.then( function ( data ) {
+					console.log( data );
+				}, function ( err ) {
+					console.error( err.message );
+				} );
+		};
+		
 		$this.findAll = function () {
 			var query = 'SELECT * FROM iContact';
+			
+			// TODO Dialog + Toast
 			
 			return SQLiteFactory
 				.execute( query, [] )
@@ -65,6 +82,8 @@ angular
 		$this.findOneById = function ( id ) {
 			var query  = 'SELECT * FROM iContact WHERE id = ?';
 			var params = [ id ];
+			
+			// TODO Dialog + Toast
 			
 			return SQLiteFactory
 				.execute( query, params )

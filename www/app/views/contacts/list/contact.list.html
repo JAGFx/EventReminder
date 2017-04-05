@@ -16,6 +16,7 @@
 			<td >{{ contact.mobile }}</td >
 			<td >
 				<a ui-sref="contactEdit({ id: contact.id })" class="btn btn-primary btn-xs" >Edit</a >
+				<button class="btn btn-danger btn-xs" ng-click="contactListCtrl.deleteContact( contact )" >Delete</button >
 			</td >
 		</tr >
 	</table >
