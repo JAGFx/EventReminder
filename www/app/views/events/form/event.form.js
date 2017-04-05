@@ -44,19 +44,26 @@ angular
 			} );
 	} );
 
-function EventNewCtrl() {
+function EventNewCtrl( EventFactory ) {
 	var $this = this;
 	
 	$this.validate = function ( valid ) {
 		if ( valid ) {
 			// TODO Set in DB
+			EventFactory
+				.insertEvent( $this.event )
+				.then( function ( data ) {
+					console.log( 'Inserted' );
+				}, function ( err ) {
+					console.error( err.message );
+				} );
 		}
 	};
 	
 	$this.init = function () {
 		$this.type = 'Create';
 		
-		$this.event = new iEvent( '', '', '' );
+		$this.event = new iEvent();
 		$this.event.generateID();
 	};
 	

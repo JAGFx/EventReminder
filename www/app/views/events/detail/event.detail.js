@@ -55,7 +55,7 @@ function EventDetailCtrl( event, PictureFactory, ContactFactory ) {
 		// TODO Test on mobile
 		
 		PictureFactory
-			.takePicture( $this.event.id )
+			.takePicture( $this.event )
 			.then( function ( data ) {
 				console.log( data );
 			}, function ( err ) {

@@ -10,10 +10,16 @@
 			<strong >Warning!</strong > You must set a name and text to create new event.
 		</div >
 		
+		<div class="form-group" ng-class="{ 'has-error' : eventForm.date.$invalid && ( eventForm.$submitted || !eventForm.date.$pristine ) }" >
+			<label for="date" >Date</label >
+			<input type="date" id="date" class="form-control" name="date" ng-model="eventFormCtrl.event.date" required >
+		</div >
+		
 		<div class="form-group" ng-class="{ 'has-error' : eventForm.title.$invalid && ( eventForm.$submitted || !eventForm.title.$pristine ) }" >
 			<label for="title" >Title</label >
 			<input type="text" id="title" class="form-control" name="title" ng-model="eventFormCtrl.event.title" required >
 		</div >
+		
 		<div class="form-group" ng-class="{ 'has-error' : eventForm.text.$invalid && ( eventForm.$submitted || !eventForm.text.$pristine ) }" >
 			<label for="text" >Text</label >
 			<textarea id="text" class="form-control" name="text" ng-model="eventFormCtrl.event.text" required ></textarea >

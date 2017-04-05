@@ -14,7 +14,7 @@ angular
 	.factory( 'PictureFactory', function ( $cordovaCamera, SQLiteFactory, CONSTANTS ) {
 		var $this = this;
 		
-		$this.takePicture = function ( iEventID ) {
+		$this.takePicture = function ( event ) {
 			var options = {
 				quality:            50,
 				destinationType:    Camera.DestinationType.DATA_URL,
@@ -29,7 +29,8 @@ angular
 			};
 			
 			return $cordovaCamera.getPicture( options ).then( function ( imageData ) {
-				var pic = new Picture( iEventID, "data:image/jpeg;base64," + imageData );
+				var pic = new Picture( event.id, "data:image/jpeg;base64," + imageData );
+				event.pictures.push( pic );
 				
 				//TODO: Save on DB
 				return pic;

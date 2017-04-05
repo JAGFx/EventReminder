@@ -15,7 +15,7 @@ angular
 		var $this = this;
 		
 		$this.insertContact = function ( contact ) {
-			var query = 'INSERT INTO iContact VALUES (?, ?, ?, ?, ?)';
+			var query  = 'INSERT INTO iContact VALUES (?, ?, ?, ?, ?)';
 			var params = [ contact.id, contact.lastname, contact.firstname, contact.email, contact.mobile ];
 			// TODO Dialog + Toast
 			
@@ -89,7 +89,7 @@ angular
 				.execute( query, params )
 				.then( function ( rows ) {
 					console.log( rows );
-					return rows.rows.item( 0 );
+					return $this.makeObject( rows.rows.item( 0 ) );
 				}, function ( err ) {
 					console.error( err.message );
 					return [];
@@ -100,18 +100,40 @@ angular
 		$this.pinContactFromMobile = function ( event ) {
 			
 			// TODO Dialog + Toast
-			$cordovaContacts
+			return $cordovaContacts
 				.pickContact()
 				.then( function ( contactPicked ) {
 					console.log( contactPicked );
-					var contact = new iContact( 'last', 'first', 'mail' );
-					contact.setMobile( 0 );
+					var email = ( contactPicked.emails !== null )
+						? contactPicked.emails[ 0 ]
+						: null;
 					
-					event.contacts.push( contact );
-					// TODO Update Event
+					var mobile = ( contactPicked.phoneNumbers !== null )
+						? contactPicked.phoneNumbers[ 0 ].value
+						: null;
+					
+					var contact = new iContact( contactPicked.name.familyName, contactPicked.name.formatted, email );
+					contact.setMobile( mobile );
+					contact.generateID();
+					
+					$this.insertContact( contact )
+						.then( function () {
+							console.log( 'Pined' );
+							event.contacts.push( contact );
+						}, function ( err ) {
+							console.error( err.message );
+						} );
 				}, function ( err ) {
 					console.error( err.message );
 				} );
+		};
+		
+		$this.makeObject = function ( data ) {
+			var c = new iContact( data.lastname, data.firstname, data.email );
+			c.setMobile( data.mobile );
+			c.id = data.id;
+			
+			return c;
 		};
 		
 		return $this;
