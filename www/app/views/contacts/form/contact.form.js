@@ -74,13 +74,20 @@ angular
 			} );
 	} );
 
-function ContactNewPinCtrl( event, contact ) {
+function ContactNewPinCtrl( event, contact, ContactFactory ) {
 	var $this = this;
 	
 	$this.validate = function ( valid ) {
 		if ( valid ) {
 			// TODO Set in DB
-			event.contacts.push( $this.contact );
+			/*event.contacts.push( $this.contact );*/
+			ContactFactory
+				.pinNewContact( event, $this.contact )
+				.then( function ( data ) {
+					console.log( 'Inserted' );
+				}, function ( err ) {
+					console.error( err.message );
+				} );
 			console.log( event.contacts );
 		}
 	};

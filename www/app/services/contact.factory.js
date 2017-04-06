@@ -43,6 +43,21 @@ angular
 				} );
 		};
 		
+		$this.assignContactToEvent = function ( contact, event ) {
+			var query  = 'INSERT INTO iContact_iEvent VALUES(?, ?)';
+			var params = [ contact.id, event.id ];
+			
+			// TODO Dialog + Toast
+			
+			return SQLiteFactory
+				.execute( query, params )
+				.then( function ( data ) {
+					console.log( data );
+				}, function ( err ) {
+					console.error( err.message );
+				} );
+		};
+		
 		$this.deleteContact = function ( id ) {
 			var query  = 'DELETE FROM iContact WHERE id = ?';
 			var params = [ id ];
@@ -105,14 +120,18 @@ angular
 				.then( function ( contactPicked ) {
 					console.log( contactPicked );
 					var email = ( contactPicked.emails !== null )
-						? contactPicked.emails[ 0 ]
+						? contactPicked.emails[ 0 ].value
 						: null;
 					
 					var mobile = ( contactPicked.phoneNumbers !== null )
 						? contactPicked.phoneNumbers[ 0 ].value
 						: null;
 					
-					var contact = new iContact( contactPicked.name.familyName, contactPicked.name.formatted, email );
+					var lastname = ( contactPicked.name.familyName !== null )
+						? contactPicked.name.familyName
+						: contactPicked.name.formatted;
+					
+					var contact = new iContact( lastname, contactPicked.name.formatted, email );
 					contact.setMobile( mobile );
 					contact.generateID();
 					
@@ -122,6 +141,18 @@ angular
 							event.contacts.push( contact );
 						}, function ( err ) {
 							console.error( err.message );
+						} );
+				}, function ( err ) {
+					console.error( err.message );
+				} );
+		};
+		
+		$this.pinNewContact = function ( event, contact ) {
+			return $this.insertContact( contact )
+				.then( function ( data ) {
+					$this.assignContactToEvent( contact, event )
+						.then( function ( data ) {
+							event.contacts.push( contact );
 						} );
 				}, function ( err ) {
 					console.error( err.message );

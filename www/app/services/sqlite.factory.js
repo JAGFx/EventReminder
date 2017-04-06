@@ -18,12 +18,12 @@ angular
 		$this.db = null;
 		
 		$this.initDb = function () {
-			var queryContact = "CREATE TABLE IF NOT EXISTS iContact (id, lastname, firstname, email, mobile)";
-			var queryEvent        = "CREATE TABLE IF NOT EXISTS iEvent (id, date, title, text, lat, long)";
-			var queryContactEvent = "CREATE TABLE IF NOT EXISTS iContact_iEvent (contact_id, event_id)";
-			var queryPicture = "CREATE TABLE IF NOT EXISTS Picture (value blob, eventID)";
+			var queryContact      = "CREATE TABLE IF NOT EXISTS iContact (id primary_key, lastname, firstname, email, mobile)";
+			var queryEvent        = "CREATE TABLE IF NOT EXISTS iEvent (id primary_key, date, title, text, lat, long)";
+			var queryContactEvent = "CREATE TABLE IF NOT EXISTS iContact_iEvent (contact_id, event_id, PRIMARY KEY (contact_id, event_id))";
+			var queryPicture      = "CREATE TABLE IF NOT EXISTS Picture (id primary_key, value blob, eventID)";
 			
-			$this.db         = $cordovaSQLite.openDB( {
+			$this.db = $cordovaSQLite.openDB( {
 				name:                CONSTANTS.DB_NAME,
 				iosDatabaseLocation: 'default'
 			} );
@@ -40,6 +40,13 @@ angular
 					console.log( 'SUCCESS - iContact', res );
 				}, function ( err ) {
 					console.error( 'ERROR - iContact', err.message );
+				} );
+			
+			$this.execute( queryContactEvent, [] )
+				.then( function ( res ) {
+					console.log( 'SUCCESS - iContact_iEvent', res );
+				}, function ( err ) {
+					console.error( 'ERROR - iContact_iEvent', err.message );
 				} );
 			
 			$this.execute( queryPicture, [] )

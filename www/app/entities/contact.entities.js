@@ -15,7 +15,11 @@ function iContact( lastname, firstname, email ) {
 	this.mobile = null;
 	
 	this.toString = function () {
-		return this.firstname + ' ' + this.lastname + ' <' + this.email + '>';
+		var str = this.firstname + ' ' + this.lastname;
+		if ( this.email )
+			str += ' <' + this.email + '>';
+		
+		return str;
 	};
 	
 	this.generateID = function () {
