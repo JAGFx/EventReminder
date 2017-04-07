@@ -4,6 +4,9 @@
 	<form name="eventForm" ng-submit="eventFormCtrl.validate( eventForm.$valid )" novalidate >
 		<pre >{{ eventFormCtrl.event | json }}</pre >
 		
+		<span class="label label-default" ng-if="eventFormCtrl.event.location.lat" >Lat: {{ eventFormCtrl.event.location.lat }} - Long: {{ eventFormCtrl.event.location.long }}</span >
+		<button type="button" class="btn col-xs-12 btn-default" ng-if="!eventFormCtrl.event.location.lat" ng-click="eventFormCtrl.locateEvent()" >Locate</button >
+		
 		<div class="alert alert-warning alert-dismissible" role="alert" ng-if="eventForm.$submitted && eventForm.$invalid" >
 			<button type="button" class="close" data-dismiss="alert" aria-label="Close" >
 				<span aria-hidden="true" >&times;</span ></button >

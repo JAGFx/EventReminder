@@ -4,7 +4,6 @@
 		<div class="pull-right" >
 			<span class="label label-primary" >{{ $ctrl.event.date | date }}</span >
 			<span class="label label-default" ng-if="$ctrl.event.location.lat" >Lat: {{ $ctrl.event.location.lat }} - Long: {{ $ctrl.event.location.long }}</span >
-			<button class="btn btn-xs btn-default" ng-if="!$ctrl.event.location.lat" ng-click="$ctrl.locateEvent()" >Locate</button >
 			<a ui-sref="eventEdit({id:  $ctrl.event.id })" class="btn btn-xs btn-default" >Edit</a >
 		</div >
 	</div >

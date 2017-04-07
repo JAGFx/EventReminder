@@ -26,19 +26,22 @@ angular
 				controller:   EventEditCtrl,
 				controllerAs: 'eventFormCtrl',
 				resolve:      {
-					event: function ( $stateParams ) {
+					event: function ( $stateParams, EventFactory ) {
 						console.log( $stateParams.id );
 						
-						// TODO Fetch from DB
-						var e = new iEvent( 'Plop', '2017-04-24', 'un jolie petit texte' );
-						/*e.location = {
+						return EventFactory
+							.findEvent( $stateParams.id );
+						
+						/*// TODO Fetch from DB
+						 var e = new iEvent( 'Plop', '2017-04-24', 'un jolie petit texte' );
+						 /!*e.location = {
 						 lat:  45.255454545454545484845,
 						 long: 42.33659851254545215151
-						 };*/
-						e.generateID();
-						console.log( e );
-						
-						return e;
+						 };*!/
+						 e.generateID();
+						 console.log( e );
+						 
+						 return e;*/
 					}
 				}
 			} );
@@ -67,21 +70,46 @@ function EventNewCtrl( EventFactory ) {
 		$this.event.generateID();
 	};
 	
+	$this.locateEvent = function () {
+		console.log( 'LOCATE EVENT' );
+		// TODO Test on mobile
+		
+		EventFactory
+			.locateEvent( $this.event )
+			.then( function () {
+				EventFactory.updateEvent( $this.event );
+			} )
+	};
+	
 	$this.init();
 }
 
-function EventEditCtrl( event ) {
+function EventEditCtrl( event, EventFactory ) {
 	var $this = this;
 	
 	$this.validate = function ( valid ) {
+		console.log( valid );
+		console.log( $this.event );
+		
 		if ( valid ) {
-			// TODO Update in DB
+			EventFactory.updateEvent( $this.event );
 		}
 	};
 	
 	$this.init = function () {
 		$this.type  = 'Edit';
 		$this.event = event;
+	};
+	
+	$this.locateEvent = function () {
+		console.log( 'LOCATE EVENT' );
+		// TODO Test on mobile
+		
+		EventFactory
+			.locateEvent( $this.event )
+			.then( function () {
+				EventFactory.updateEvent( $this.event );
+			} )
 	};
 	
 	$this.init();

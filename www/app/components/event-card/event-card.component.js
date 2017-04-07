@@ -25,12 +25,4 @@ function EventCardController( CONSTANTS, EventFactory ) {
 	
 	$this.full    = $this.full || false;
 	$this.picSize = CONSTANTS.PICTURES;
-	
-	$this.locateEvent = function () {
-		console.log( 'LOCATE EVENT' );
-		// TODO Test on mobile
-		
-		EventFactory
-			.locateEvent( $this.event );
-	};
 }

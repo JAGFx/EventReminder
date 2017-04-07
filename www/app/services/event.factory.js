@@ -16,7 +16,7 @@ angular
 		
 		$this.insertEvent = function ( event ) {
 			var query  = 'INSERT INTO iEvent VALUES (?, ?, ?, ?, ?, ?)';
-			var params = [ event.id, event.date, event.title, event.text, event.lat, event.long ];
+			var params = [ event.id, event.date, event.title, event.text, event.location.lat, event.location.long ];
 			// TODO Dialog + Toast
 			
 			return SQLiteFactory
@@ -29,7 +29,18 @@ angular
 		};
 		
 		$this.updateEvent = function ( event ) {
-			// TODO Update in DB
+			var query  = 'UPDATE iEvent SET date = ?, title = ?, text = ?, lat = ?, long = ? WHERE id = ?';
+			var params = [ event.date, event.title, event.text, event.location.lat, event.location.long, event.id ];
+			
+			// TODO Dialog + Toast
+			
+			SQLiteFactory
+				.execute( query, params )
+				.then( function ( data ) {
+					console.log( data );
+				}, function ( err ) {
+					console.error( err.message );
+				} );
 		};
 		
 		$this.findAll = function () {
@@ -120,13 +131,11 @@ angular
 		$this.locateEvent = function ( event ) {
 			var posOptions = { timeout: 10000, enableHighAccuracy: false };
 			
-			$cordovaGeolocation
+			return $cordovaGeolocation
 				.getCurrentPosition( posOptions )
 				.then( function ( position ) {
 					console.log( 'Init', position );
 					event.setLocation( position.coords.latitude, position.coords.longitude );
-					
-					// TODO Update in DB
 					
 				}, function ( err ) {
 					console.error( err.message );
@@ -140,7 +149,7 @@ angular
 			var e = new iEvent( data.title, data.date, data.text );
 			e.id  = data.id;
 			
-			if ( data.lat !== undefined && data.long !== undefined )
+			if ( data.lat && data.long )
 				e.setLocation( data.lat, data.long );
 			
 			return e;
