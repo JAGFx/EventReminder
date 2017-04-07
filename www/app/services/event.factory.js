@@ -11,7 +11,7 @@
 
 angular
 	.module( 'eventReminderApp' )
-	.factory( 'EventFactory', function ( $cordovaGeolocation, SQLiteFactory, ContactFactory ) {
+	.factory( 'EventFactory', function ( $cordovaGeolocation, SQLiteFactory, ContactFactory, PictureFactory ) {
 		var $this = this;
 		
 		$this.insertEvent = function ( event ) {
@@ -87,6 +87,27 @@ angular
 					for ( var i = 0; i < rows.rows.length; i++ ) {
 						console.log( rows.rows.item( i ) );
 						event.contacts.push( ContactFactory.makeObject( rows.rows.item( i ) ) );
+					}
+					
+					return event;
+				}, function ( err ) {
+					console.error( err.message );
+					return [];
+				} );
+		};
+		
+		$this.findAllPictureTaken = function ( event ) {
+			var query  = 'SELECT p.* FROM Picture p WHERE p.eventID = ?';
+			var params = [ event.id ];
+			
+			return SQLiteFactory
+				.execute( query, params )
+				.then( function ( rows ) {
+					console.log( rows );
+					
+					for ( var i = 0; i < rows.rows.length; i++ ) {
+						console.log( rows.rows.item( i ) );
+						event.pictures.push( PictureFactory.makeObject( rows.rows.item( i ) ) );
 					}
 					
 					return event;

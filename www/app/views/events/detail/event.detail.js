@@ -25,7 +25,11 @@ angular
 					return EventFactory
 						.findEvent( $stateParams.id )
 						.then( function ( event ) {
-							return EventFactory.findAllContactPined( event );
+							return EventFactory
+								.findAllContactPined( event )
+								.then( function ( event ) {
+									return EventFactory.findAllPictureTaken( event );
+								} );
 						} );
 					
 					/*// TODO Fetch from DB
@@ -62,8 +66,11 @@ function EventDetailCtrl( event, PictureFactory, ContactFactory ) {
 		
 		PictureFactory
 			.takePicture( $this.event )
-			.then( function ( data ) {
-				console.log( data );
+			.then( function ( picture ) {
+				PictureFactory
+					.insertPicture( picture );
+				
+				console.log( picture );
 			}, function ( err ) {
 				console.error( err.message );
 			} );
