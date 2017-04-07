@@ -11,7 +11,7 @@
 
 angular
 	.module( 'eventReminderApp' )
-	.factory( 'EventFactory', function ( $cordovaGeolocation, SQLiteFactory ) {
+	.factory( 'EventFactory', function ( $cordovaGeolocation, SQLiteFactory, ContactFactory ) {
 		var $this = this;
 		
 		$this.insertEvent = function ( event ) {
@@ -41,12 +41,12 @@ angular
 				.execute( query, [] )
 				.then( function ( rows ) {
 					console.log( rows.rows.item( 1 ) );
-					var contacts = [];
+					var events = [];
 					
 					for ( var i = 0; i < rows.rows.length; i++ )
-						contacts.push( $this.makeObject( rows.rows.item( i ) ) );
+						events.push( $this.makeObject( rows.rows.item( i ) ) );
 					
-					return contacts;
+					return events;
 				}, function ( err ) {
 					console.error( err.message );
 					return [];
@@ -54,7 +54,46 @@ angular
 		};
 		
 		$this.findEvent = function ( idEvent ) {
+			var query  = 'SELECT * FROM iEvent WHERE id = ?';
+			var params = [ idEvent ];
 			
+			return SQLiteFactory
+				.execute( query, params )
+				.then( function ( rows ) {
+					console.log( rows );
+					return $this.makeObject( rows.rows.item( 0 ) );
+					
+				}, function ( err ) {
+					console.error( err.message );
+					return null;
+				} );
+		};
+		
+		$this.findAllContactPined = function ( event ) {
+			var query  = 'SELECT c.* FROM iContact_iEvent ie JOIN iContact c ON ie.contact_id = c.id WHERE ie.event_id = ?';
+			var params = [ event.id ];
+			
+			//var query = 'SELECT * FROM iContact_iEvent';
+			
+			// TODO Dialog + Toast
+			
+			console.log( 'FIND CONTACT PINED' );
+			
+			return SQLiteFactory
+				.execute( query, params )
+				.then( function ( rows ) {
+					console.log( rows );
+					
+					for ( var i = 0; i < rows.rows.length; i++ ) {
+						console.log( rows.rows.item( i ) );
+						event.contacts.push( ContactFactory.makeObject( rows.rows.item( i ) ) );
+					}
+					
+					return event;
+				}, function ( err ) {
+					console.error( err.message );
+					return [];
+				} );
 		};
 		
 		$this.locateEvent = function ( event ) {
@@ -74,6 +113,9 @@ angular
 		};
 		
 		$this.makeObject = function ( data ) {
+			if ( !data )
+				return new iEvent();
+			
 			var e = new iEvent( data.title, data.date, data.text );
 			e.id  = data.id;
 			

@@ -29,7 +29,7 @@ angular
 		};
 		
 		$this.updateContact = function ( contact ) {
-			var query  = 'UPDATE iContact SET lastname = ?, firstname = ?, email = ?, mobile = ? WHERE id = ?'
+			var query  = 'UPDATE iContact SET lastname = ?, firstname = ?, email = ?, mobile = ? WHERE id = ?';
 			var params = [ contact.lastname, contact.firstname, contact.email, contact.mobile, contact.id ];
 			
 			// TODO Dialog + Toast
@@ -138,7 +138,13 @@ angular
 					$this.insertContact( contact )
 						.then( function () {
 							console.log( 'Pined' );
-							event.contacts.push( contact );
+							$this.assignContactToEvent( contact, event )
+								.then( function ( data ) {
+									console.log( data );
+									event.contacts.push( contact );
+								}, function ( err ) {
+									console.error( err.message );
+								} );
 						}, function ( err ) {
 							console.error( err.message );
 						} );
@@ -152,7 +158,10 @@ angular
 				.then( function ( data ) {
 					$this.assignContactToEvent( contact, event )
 						.then( function ( data ) {
+							console.log( data );
 							event.contacts.push( contact );
+						}, function ( err ) {
+							console.error( err.message );
 						} );
 				}, function ( err ) {
 					console.error( err.message );
@@ -160,6 +169,9 @@ angular
 		};
 		
 		$this.makeObject = function ( data ) {
+			if ( !data )
+				return new iContact();
+			
 			var c = new iContact( data.lastname, data.firstname, data.email );
 			c.setMobile( data.mobile );
 			c.id = data.id;
