@@ -20,6 +20,7 @@ angular
 				controller:   EventNewCtrl,
 				controllerAs: 'eventFormCtrl'
 			} )
+			
 			.state( 'eventEdit', {
 				url:          '/events/{id:string}/edit',
 				templateUrl:  'views/events/form/event.form.html',
@@ -31,34 +32,25 @@ angular
 						
 						return EventFactory
 							.findEvent( $stateParams.id );
-						
-						/*// TODO Fetch from DB
-						 var e = new iEvent( 'Plop', '2017-04-24', 'un jolie petit texte' );
-						 /!*e.location = {
-						 lat:  45.255454545454545484845,
-						 long: 42.33659851254545215151
-						 };*!/
-						 e.generateID();
-						 console.log( e );
-						 
-						 return e;*/
 					}
 				}
 			} );
 	} );
 
-function EventNewCtrl( EventFactory ) {
+function EventNewCtrl( $state, CordovaFactory, EventFactory ) {
 	var $this = this;
 	
 	$this.validate = function ( valid ) {
 		if ( valid ) {
-			// TODO Set in DB
 			EventFactory
 				.insertEvent( $this.event )
 				.then( function ( data ) {
-					console.log( 'Inserted' );
+					CordovaFactory.toast( 'Event created' );
+					$state.go( 'eventDetail', { id: $this.event.id } );
+					
 				}, function ( err ) {
 					console.error( err.message );
+					// TODO Dialog
 				} );
 		}
 	};
@@ -71,29 +63,37 @@ function EventNewCtrl( EventFactory ) {
 	};
 	
 	$this.locateEvent = function () {
-		console.log( 'LOCATE EVENT' );
-		// TODO Test on mobile
-		
 		EventFactory
 			.locateEvent( $this.event )
 			.then( function () {
 				EventFactory.updateEvent( $this.event );
-			} )
+				
+			}, function ( err ) {
+				// TODO Dialog
+			} );
 	};
 	
 	$this.init();
 }
 
-function EventEditCtrl( event, EventFactory ) {
+function EventEditCtrl( event, $state, CordovaFactory, EventFactory ) {
 	var $this = this;
 	
 	$this.validate = function ( valid ) {
-		console.log( valid );
-		console.log( $this.event );
+		/*console.log( valid );
+		 console.log( $this.event );*/
 		
-		if ( valid ) {
-			EventFactory.updateEvent( $this.event );
-		}
+		if ( valid )
+			EventFactory
+				.updateEvent( $this.event )
+				.then( function () {
+					CordovaFactory.toast( 'Event updated' );
+					$state.go( 'eventDetail', { id: $this.event.id } );
+					
+				}, function ( err ) {
+					// TODO Dialog
+				} );
+		
 	};
 	
 	$this.init = function () {
@@ -102,14 +102,15 @@ function EventEditCtrl( event, EventFactory ) {
 	};
 	
 	$this.locateEvent = function () {
-		console.log( 'LOCATE EVENT' );
-		// TODO Test on mobile
-		
 		EventFactory
 			.locateEvent( $this.event )
 			.then( function () {
-				EventFactory.updateEvent( $this.event );
-			} )
+				EventFactory
+					.updateEvent( $this.event );
+				
+			}, function ( err ) {
+				// TODO Dialog
+			} );
 	};
 	
 	$this.init();

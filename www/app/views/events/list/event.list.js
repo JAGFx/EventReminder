@@ -24,18 +24,18 @@ angular
 function EventListCtrl( CONSTANTS, EventFactory ) {
 	var $this = this;
 	
-	// TODO Fetch from DB
-	$this.events = [];
+	$this.events  = [];
 	$this.picSize = CONSTANTS.PICTURES;
 	
 	$this.init = function () {
 		EventFactory
 			.findAll()
 			.then( function ( events ) {
-				console.log( events );
 				$this.events = events;
+				
 			}, function ( err ) {
 				console.error( err.message );
+				// TODO Dialog
 			} );
 	};
 	

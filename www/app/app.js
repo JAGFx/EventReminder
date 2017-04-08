@@ -15,9 +15,10 @@ angular
 		'er.contact.form'
 	] )
 	.constant( 'CONSTANTS', {
-		DB_NAME:       'eventReminder.db',
-		DEFAULT_STATE: 'eventList',
-		PICTURES:      {
+		DB_NAME:            'eventReminder.db',
+		DEFAULT_STATE:      'eventList',
+		MOMENT_DATE_FORMAT: 'Y-m-DD HH:mm:ss',
+		PICTURES:           {
 			HEIGHT: 100,
 			WIDTH:  100
 		}
@@ -25,11 +26,13 @@ angular
 	.config( config )
 	.run( run );
 
-function config( $locationProvider ) {
+function config( $locationProvider, $urlRouterProvider, CONSTANTS ) {
 	$locationProvider.hashPrefix( '!' );
+	$urlRouterProvider.otherwise( '/' );
+	//$state.go( CONSTANTS.DEFAULT_STATE );
 }
 
-function run( $state, CONSTANTS, SQLiteFactory ) {
+function run( SQLiteFactory ) {
 	document.addEventListener( "deviceready", function () {
 		console.log( 'Ready' );
 		

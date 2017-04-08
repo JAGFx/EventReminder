@@ -35,14 +35,11 @@ angular
 				controller:   ContactNewPinCtrl,
 				controllerAs: 'contactFormCtrl',
 				resolve:      {
-					event:   function ( $stateParams ) {
+					event:   function ( $stateParams, EventFactory ) {
 						console.log( $stateParams.id );
 						
-						// TODO Fetch from DB
-						var e = new iEvent( 'Plop', '2017-04-24 17:24:32', 'un jolie petit texte' );
-						e.generateID();
-						
-						return e;
+						return EventFactory
+							.findEvent( $stateParams.id );
 					},
 					contact: function () {
 						var c = new iContact();
@@ -64,27 +61,22 @@ angular
 						
 						return ContactFactory
 							.findOneById( $stateParams.id );
-						/*// TODO Fetch from DB
-						 var c = new iContact( 'lstname', 'fstname', 'mail' );
-						 c.generateID();
-						 
-						 return c;*/
 					}
 				}
 			} );
 	} );
 
-function ContactNewPinCtrl( event, contact, ContactFactory ) {
+function ContactNewPinCtrl( event, contact, $state, CordovaFactory, ContactFactory ) {
 	var $this = this;
 	
 	$this.validate = function ( valid ) {
 		if ( valid ) {
-			// TODO Set in DB
-			/*event.contacts.push( $this.contact );*/
 			ContactFactory
 				.pinNewContact( event, $this.contact )
 				.then( function ( data ) {
-					console.log( 'Inserted' );
+					CordovaFactory.toast( 'Contact pined' );
+					$state.go( 'eventDetail', { id: event.id } );
+					
 				}, function ( err ) {
 					console.error( err.message );
 				} );
@@ -101,43 +93,46 @@ function ContactNewPinCtrl( event, contact, ContactFactory ) {
 	$this.init();
 }
 
-function ContactNewCtrl( contact, ContactFactory ) {
-	var $this     = this;
-	$this.contact = {};
+function ContactNewCtrl( contact, $state, CordovaFactory, ContactFactory ) {
+	var $this = this;
 	
 	$this.validate = function ( valid ) {
 		if ( valid ) {
-			// TODO Set in DB
-			// TODO TOAST
 			ContactFactory
 				.insertContact( $this.contact )
 				.then( function ( data ) {
-					console.log( 'Inserted' );
+					CordovaFactory.toast( 'Contact created' );
+					$state.go( 'contactList' );
+					
 				}, function ( err ) {
 					console.error( err.message );
+					// TODO Dialog
 				} );
 		}
 	};
 	
 	$this.init = function () {
-		console.log( 'iContact' );
-		$this.type = 'Create';
-		
-		/*var c = new iContact();
-		 c.generateID();*/
+		$this.type    = 'Create';
 		$this.contact = contact;
 	};
 	
 	$this.init();
 }
 
-function ContactEdtiCtrl( contact, ContactFactory ) {
+function ContactEdtiCtrl( contact, $state, CordovaFactory, ContactFactory ) {
 	var $this = this;
 	
 	$this.validate = function ( valid ) {
 		if ( valid ) {
-			// TODO Update in DB
-			ContactFactory.updateContact( $this.contact );
+			ContactFactory
+				.updateContact( $this.contact )
+				.then( function ( data ) {
+					CordovaFactory.toast( 'Contact updated' );
+					$state.go( 'contactList' );
+					
+				}, function ( err ) {
+					// TODO Dialog
+				} );
 		}
 	};
 	

@@ -11,18 +11,17 @@
 
 angular
 	.module( 'eventReminderApp' )
-	.factory( 'EventFactory', function ( $cordovaGeolocation, SQLiteFactory, ContactFactory, PictureFactory ) {
+	.factory( 'EventFactory', function ( CordovaFactory, SQLiteFactory, ContactFactory, PictureFactory, CONSTANTS ) {
 		var $this = this;
 		
 		$this.insertEvent = function ( event ) {
 			var query  = 'INSERT INTO iEvent VALUES (?, ?, ?, ?, ?, ?)';
-			var params = [ event.id, event.date, event.title, event.text, event.location.lat, event.location.long ];
-			// TODO Dialog + Toast
+			var params = [ event.id, event.date.getTime(), event.title, event.text, event.location.lat, event.location.long ];
 			
 			return SQLiteFactory
 				.execute( query, params )
 				.then( function ( data ) {
-					console.log( data );
+					//console.log( data );
 				}, function ( err ) {
 					console.error( err.message );
 				} );
@@ -30,14 +29,14 @@ angular
 		
 		$this.updateEvent = function ( event ) {
 			var query  = 'UPDATE iEvent SET date = ?, title = ?, text = ?, lat = ?, long = ? WHERE id = ?';
-			var params = [ event.date, event.title, event.text, event.location.lat, event.location.long, event.id ];
+			var params = [ event.date.getTime(), event.title, event.text, event.location.lat, event.location.long, event.id ];
 			
-			// TODO Dialog + Toast
-			
-			SQLiteFactory
+			return SQLiteFactory
 				.execute( query, params )
 				.then( function ( data ) {
-					console.log( data );
+					//console.log( data );
+					CordovaFactory.toast( 'Event updated' );
+					
 				}, function ( err ) {
 					console.error( err.message );
 				} );
@@ -46,12 +45,10 @@ angular
 		$this.findAll = function () {
 			var query = 'SELECT * FROM iEvent';
 			
-			// TODO Dialog + Toast
-			
 			return SQLiteFactory
 				.execute( query, [] )
 				.then( function ( rows ) {
-					console.log( rows.rows.item( 1 ) );
+					//console.log( rows.rows.item( 1 ) );
 					var events = [];
 					
 					for ( var i = 0; i < rows.rows.length; i++ )
@@ -71,7 +68,7 @@ angular
 			return SQLiteFactory
 				.execute( query, params )
 				.then( function ( rows ) {
-					console.log( rows );
+					//console.log( rows );
 					return $this.makeObject( rows.rows.item( 0 ) );
 					
 				}, function ( err ) {
@@ -84,16 +81,10 @@ angular
 			var query  = 'SELECT c.* FROM iContact_iEvent ie JOIN iContact c ON ie.contact_id = c.id WHERE ie.event_id = ?';
 			var params = [ event.id ];
 			
-			//var query = 'SELECT * FROM iContact_iEvent';
-			
-			// TODO Dialog + Toast
-			
-			console.log( 'FIND CONTACT PINED' );
-			
 			return SQLiteFactory
 				.execute( query, params )
 				.then( function ( rows ) {
-					console.log( rows );
+					//console.log( rows );
 					
 					for ( var i = 0; i < rows.rows.length; i++ ) {
 						console.log( rows.rows.item( i ) );
@@ -114,7 +105,7 @@ angular
 			return SQLiteFactory
 				.execute( query, params )
 				.then( function ( rows ) {
-					console.log( rows );
+					//console.log( rows );
 					
 					for ( var i = 0; i < rows.rows.length; i++ ) {
 						console.log( rows.rows.item( i ) );
@@ -129,16 +120,10 @@ angular
 		};
 		
 		$this.locateEvent = function ( event ) {
-			var posOptions = { timeout: 10000, enableHighAccuracy: false };
-			
-			return $cordovaGeolocation
-				.getCurrentPosition( posOptions )
+			return CordovaFactory
+				.getCurrentPosition()
 				.then( function ( position ) {
-					console.log( 'Init', position );
 					event.setLocation( position.coords.latitude, position.coords.longitude );
-					
-				}, function ( err ) {
-					console.error( err.message );
 				} );
 		};
 		
@@ -146,7 +131,7 @@ angular
 			if ( !data )
 				return new iEvent();
 			
-			var e = new iEvent( data.title, data.date, data.text );
+			var e = new iEvent( data.title, new Date( data.date ), data.text );
 			e.id  = data.id;
 			
 			if ( data.lat && data.long )

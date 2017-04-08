@@ -16,7 +16,7 @@ angular
 		} );
 	} );
 
-function ContactListCtrl( ContactFactory ) {
+function ContactListCtrl( CordovaFactory, ContactFactory ) {
 	var $this = this;
 	
 	$this.contacts = [];
@@ -25,10 +25,12 @@ function ContactListCtrl( ContactFactory ) {
 		ContactFactory
 			.findAll()
 			.then( function ( contacts ) {
-				console.log( contacts );
 				$this.contacts = contacts;
+				
 			}, function ( err ) {
 				console.error( err.message );
+				// TODO Dialog
+				
 			} );
 	};
 	
@@ -36,9 +38,14 @@ function ContactListCtrl( ContactFactory ) {
 		ContactFactory
 			.deleteContact( contact.id )
 			.then( function () {
-				// FIXME : Dont remove tr
-				var idx = $this.contacts.indexOf( contact );
-				delete $this.contacts[ idx ];
+				$this.contacts = $this.contacts.filter( function ( item ) {
+					return item.id !== contact.id;
+				} );
+				
+				CordovaFactory.toast( 'Contact deleted' );
+				
+			}, function ( err ) {
+				// TODO Dialog
 			} )
 	};
 	

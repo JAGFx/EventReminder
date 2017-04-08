@@ -20,7 +20,7 @@ angular
 		}
 	} );
 
-function EventCardController( CONSTANTS, EventFactory ) {
+function EventCardController( CONSTANTS ) {
 	var $this = this;
 	
 	$this.full    = $this.full || false;

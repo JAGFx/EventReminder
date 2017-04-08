@@ -11,7 +11,7 @@
 
 angular
 	.module( 'eventReminderApp' )
-	.factory( 'ContactFactory', function ( $cordovaContacts, SQLiteFactory ) {
+	.factory( 'ContactFactory', function ( CordovaFactory, SQLiteFactory ) {
 		var $this = this;
 		
 		$this.insertContact = function ( contact ) {
@@ -22,7 +22,7 @@ angular
 			return SQLiteFactory
 				.execute( query, params )
 				.then( function ( data ) {
-					console.log( data );
+					//console.log( data );
 				}, function ( err ) {
 					console.error( err.message );
 				} );
@@ -37,7 +37,7 @@ angular
 			SQLiteFactory
 				.execute( query, params )
 				.then( function ( data ) {
-					console.log( data );
+					//console.log( data );
 				}, function ( err ) {
 					console.error( err.message );
 				} );
@@ -52,7 +52,9 @@ angular
 			return SQLiteFactory
 				.execute( query, params )
 				.then( function ( data ) {
-					console.log( data );
+					//console.log( data );
+					CordovaFactory.toast( 'Contact pined' );
+					
 				}, function ( err ) {
 					console.error( err.message );
 				} );
@@ -62,12 +64,10 @@ angular
 			var query  = 'DELETE FROM iContact WHERE id = ?';
 			var params = [ id ];
 			
-			// TODO Dialog + Toast
-			
 			return SQLiteFactory
 				.execute( query, params )
 				.then( function ( data ) {
-					console.log( data );
+					//console.log( data );
 				}, function ( err ) {
 					console.error( err.message );
 				} );
@@ -81,7 +81,7 @@ angular
 			return SQLiteFactory
 				.execute( query, [] )
 				.then( function ( rows ) {
-					console.log( rows.rows.item( 1 ) );
+					//console.log( rows.rows.item( 1 ) );
 					var contacts = [];
 					
 					for ( var i = 0; i < rows.rows.length; i++ )
@@ -103,7 +103,7 @@ angular
 			return SQLiteFactory
 				.execute( query, params )
 				.then( function ( rows ) {
-					console.log( rows );
+					//console.log( rows );
 					return $this.makeObject( rows.rows.item( 0 ) );
 				}, function ( err ) {
 					console.error( err.message );
@@ -115,7 +115,7 @@ angular
 		$this.pinContactFromMobile = function ( event ) {
 			
 			// TODO Dialog + Toast
-			return $cordovaContacts
+			return CordovaFactory
 				.pickContact()
 				.then( function ( contactPicked ) {
 					console.log( contactPicked );
@@ -140,7 +140,7 @@ angular
 							console.log( 'Pined' );
 							$this.assignContactToEvent( contact, event )
 								.then( function ( data ) {
-									console.log( data );
+									//console.log( data );
 									event.contacts.push( contact );
 								}, function ( err ) {
 									console.error( err.message );
@@ -158,7 +158,7 @@ angular
 				.then( function ( data ) {
 					$this.assignContactToEvent( contact, event )
 						.then( function ( data ) {
-							console.log( data );
+							//console.log( data );
 							event.contacts.push( contact );
 						}, function ( err ) {
 							console.error( err.message );
