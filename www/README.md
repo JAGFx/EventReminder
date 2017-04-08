@@ -11,6 +11,7 @@ Plugin utilisés:
 * SQLite storage : `Master`
 * Dialogs : `v1.3.2`
 
+
 ##Prérequis
 
 * [NodeJS](https://nodejs.org/en/download/)
@@ -20,7 +21,7 @@ Plugin utilisés:
 
 ## Installation
 
-###### Dépendences bower
+#### Dépendences bower
 ````bash
 $ cd www
 $ bower install
