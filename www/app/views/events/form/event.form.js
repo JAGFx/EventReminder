@@ -47,10 +47,6 @@ function EventNewCtrl( $state, CordovaFactory, EventFactory ) {
 				.then( function ( data ) {
 					CordovaFactory.toast( 'Event created' );
 					$state.go( 'eventDetail', { id: $this.event.id } );
-					
-				}, function ( err ) {
-					console.error( err.message );
-					// TODO Dialog
 				} );
 		}
 	};
@@ -67,9 +63,6 @@ function EventNewCtrl( $state, CordovaFactory, EventFactory ) {
 			.locateEvent( $this.event )
 			.then( function () {
 				EventFactory.updateEvent( $this.event );
-				
-			}, function ( err ) {
-				// TODO Dialog
 			} );
 	};
 	
@@ -80,18 +73,12 @@ function EventEditCtrl( event, $state, CordovaFactory, EventFactory ) {
 	var $this = this;
 	
 	$this.validate = function ( valid ) {
-		/*console.log( valid );
-		 console.log( $this.event );*/
-		
 		if ( valid )
 			EventFactory
 				.updateEvent( $this.event )
 				.then( function () {
 					CordovaFactory.toast( 'Event updated' );
 					$state.go( 'eventDetail', { id: $this.event.id } );
-					
-				}, function ( err ) {
-					// TODO Dialog
 				} );
 		
 	};
@@ -107,9 +94,6 @@ function EventEditCtrl( event, $state, CordovaFactory, EventFactory ) {
 			.then( function () {
 				EventFactory
 					.updateEvent( $this.event );
-				
-			}, function ( err ) {
-				// TODO Dialog
 			} );
 	};
 	

@@ -11,13 +11,12 @@
 
 angular
 	.module( 'eventReminderApp' )
-	.factory( 'ContactFactory', function ( CordovaFactory, SQLiteFactory ) {
+	.factory( 'ContactFactory', function ( CordovaFactory, SQLiteFactory, CONSTANTS ) {
 		var $this = this;
 		
 		$this.insertContact = function ( contact ) {
 			var query  = 'INSERT INTO iContact VALUES (?, ?, ?, ?, ?)';
 			var params = [ contact.id, contact.lastname, contact.firstname, contact.email, contact.mobile ];
-			// TODO Dialog + Toast
 			
 			return SQLiteFactory
 				.execute( query, params )
@@ -25,6 +24,7 @@ angular
 					//console.log( data );
 				}, function ( err ) {
 					console.error( err.message );
+					CordovaFactory.alertDialog( CONSTANTS.CORDOVA.DIALOG_ERROR_TITLE, err.message );
 				} );
 		};
 		
@@ -32,22 +32,19 @@ angular
 			var query  = 'UPDATE iContact SET lastname = ?, firstname = ?, email = ?, mobile = ? WHERE id = ?';
 			var params = [ contact.lastname, contact.firstname, contact.email, contact.mobile, contact.id ];
 			
-			// TODO Dialog + Toast
-			
 			SQLiteFactory
 				.execute( query, params )
 				.then( function ( data ) {
 					//console.log( data );
 				}, function ( err ) {
 					console.error( err.message );
+					CordovaFactory.alertDialog( CONSTANTS.CORDOVA.DIALOG_ERROR_TITLE, err.message );
 				} );
 		};
 		
 		$this.assignContactToEvent = function ( contact, event ) {
 			var query  = 'INSERT INTO iContact_iEvent VALUES(?, ?)';
 			var params = [ contact.id, event.id ];
-			
-			// TODO Dialog + Toast
 			
 			return SQLiteFactory
 				.execute( query, params )
@@ -57,6 +54,7 @@ angular
 					
 				}, function ( err ) {
 					console.error( err.message );
+					CordovaFactory.alertDialog( CONSTANTS.CORDOVA.DIALOG_ERROR_TITLE, err.message );
 				} );
 		};
 		
@@ -68,29 +66,29 @@ angular
 				.execute( query, params )
 				.then( function ( data ) {
 					//console.log( data );
+					
 				}, function ( err ) {
 					console.error( err.message );
+					CordovaFactory.alertDialog( CONSTANTS.CORDOVA.DIALOG_ERROR_TITLE, err.message );
 				} );
 		};
 		
 		$this.findAll = function () {
 			var query = 'SELECT * FROM iContact';
 			
-			// TODO Dialog + Toast
-			
 			return SQLiteFactory
 				.execute( query, [] )
 				.then( function ( rows ) {
-					//console.log( rows.rows.item( 1 ) );
 					var contacts = [];
 					
 					for ( var i = 0; i < rows.rows.length; i++ )
 						contacts.push( rows.rows.item( i ) );
 					
 					return contacts;
+					
 				}, function ( err ) {
 					console.error( err.message );
-					return [];
+					CordovaFactory.alertDialog( CONSTANTS.CORDOVA.DIALOG_ERROR_TITLE, err.message );
 				} );
 		};
 		
@@ -98,23 +96,20 @@ angular
 			var query  = 'SELECT * FROM iContact WHERE id = ?';
 			var params = [ id ];
 			
-			// TODO Dialog + Toast
-			
 			return SQLiteFactory
 				.execute( query, params )
 				.then( function ( rows ) {
 					//console.log( rows );
 					return $this.makeObject( rows.rows.item( 0 ) );
+					
 				}, function ( err ) {
 					console.error( err.message );
-					return [];
+					CordovaFactory.alertDialog( CONSTANTS.CORDOVA.DIALOG_ERROR_TITLE, err.message );
 				} );
 		};
 		
 		
 		$this.pinContactFromMobile = function ( event ) {
-			
-			// TODO Dialog + Toast
 			return CordovaFactory
 				.pickContact()
 				.then( function ( contactPicked ) {
@@ -137,19 +132,13 @@ angular
 					
 					$this.insertContact( contact )
 						.then( function () {
-							console.log( 'Pined' );
 							$this.assignContactToEvent( contact, event )
 								.then( function ( data ) {
 									//console.log( data );
 									event.contacts.push( contact );
-								}, function ( err ) {
-									console.error( err.message );
 								} );
-						}, function ( err ) {
-							console.error( err.message );
 						} );
-				}, function ( err ) {
-					console.error( err.message );
+					
 				} );
 		};
 		
@@ -160,11 +149,7 @@ angular
 						.then( function ( data ) {
 							//console.log( data );
 							event.contacts.push( contact );
-						}, function ( err ) {
-							console.error( err.message );
 						} );
-				}, function ( err ) {
-					console.error( err.message );
 				} );
 		};
 		

@@ -14,7 +14,6 @@ angular
 	.factory( 'SQLiteFactory', function ( $cordovaSQLite, CONSTANTS ) {
 		var $this = this;
 		
-		// FIXME Uncomment to test on mobile
 		$this.db = null;
 		
 		$this.initDb = function () {

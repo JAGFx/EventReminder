@@ -77,10 +77,7 @@ function ContactNewPinCtrl( event, contact, $state, CordovaFactory, ContactFacto
 					CordovaFactory.toast( 'Contact pined' );
 					$state.go( 'eventDetail', { id: event.id } );
 					
-				}, function ( err ) {
-					console.error( err.message );
 				} );
-			console.log( event.contacts );
 		}
 	};
 	
@@ -104,9 +101,6 @@ function ContactNewCtrl( contact, $state, CordovaFactory, ContactFactory ) {
 					CordovaFactory.toast( 'Contact created' );
 					$state.go( 'contactList' );
 					
-				}, function ( err ) {
-					console.error( err.message );
-					// TODO Dialog
 				} );
 		}
 	};
@@ -129,9 +123,6 @@ function ContactEdtiCtrl( contact, $state, CordovaFactory, ContactFactory ) {
 				.then( function ( data ) {
 					CordovaFactory.toast( 'Contact updated' );
 					$state.go( 'contactList' );
-					
-				}, function ( err ) {
-					// TODO Dialog
 				} );
 		}
 	};

@@ -32,10 +32,6 @@ function EventListCtrl( CONSTANTS, EventFactory ) {
 			.findAll()
 			.then( function ( events ) {
 				$this.events = events;
-				
-			}, function ( err ) {
-				console.error( err.message );
-				// TODO Dialog
 			} );
 	};
 	

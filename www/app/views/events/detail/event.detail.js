@@ -51,9 +51,6 @@ function EventDetailCtrl( event, CordovaFactory, PictureFactory, ContactFactory 
 						CordovaFactory.toast( 'Picture saved' );
 					} );
 				
-			}, function ( err ) {
-				console.error( err.message );
-				// TODO Dialog
 			} );
 	};
 	
@@ -62,10 +59,6 @@ function EventDetailCtrl( event, CordovaFactory, PictureFactory, ContactFactory 
 			.pinContactFromMobile( $this.event )
 			.then( function () {
 				CordovaFactory.toast( 'Contact pined' );
-				
-			}, function ( err ) {
-				console.error( err.message );
-				// TODO Dialog
 			} );
 	};
 }

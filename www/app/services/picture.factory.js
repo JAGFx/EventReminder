@@ -22,8 +22,10 @@ angular
 				.execute( query, params )
 				.then( function ( data ) {
 					//console.log( data );
+					
 				}, function ( err ) {
 					console.error( err.message );
+					CordovaFactory.alertDialog( CONSTANTS.CORDOVA.DIALOG_ERROR_TITLE, err.message );
 				} );
 		};
 		

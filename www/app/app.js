@@ -18,6 +18,9 @@ angular
 		DB_NAME:            'eventReminder.db',
 		DEFAULT_STATE:      'eventList',
 		MOMENT_DATE_FORMAT: 'Y-m-DD HH:mm:ss',
+		CORDOVA:            {
+			DIALOG_ERROR_TITLE: 'Error'
+		},
 		PICTURES:           {
 			HEIGHT: 100,
 			WIDTH:  100

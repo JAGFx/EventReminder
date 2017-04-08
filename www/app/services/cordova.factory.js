@@ -16,8 +16,7 @@ angular
 										   $cordovaContacts,
 										   $cordovaGeolocation,
 										   $cordovaToast,
-										   $cordovaDialogs,
-										   $cordovaDatePicker ) {
+										   $cordovaDialogs ) {
 		var $this = this;
 		
 		/**
@@ -44,7 +43,8 @@ angular
 					return "data:image/jpeg;base64," + imageData;
 					
 				}, function ( err ) {
-					return err;
+					console.error( err.message );
+					$this.alertDialog( CONSTANTS.CORDOVA.DIALOG_ERROR_TITLE, err.message );
 				} );
 		};
 		
@@ -54,7 +54,14 @@ angular
 		 */
 		$this.pickContact = function () {
 			return $cordovaContacts
-				.pickContact();
+				.pickContact()
+				.then( function ( data ) {
+					return data;
+					
+				}, function ( err ) {
+					console.error( err.message );
+					$this.alertDialog( CONSTANTS.CORDOVA.DIALOG_ERROR_TITLE, err.message );
+				} );
 		};
 		
 		$this.getCurrentPosition = function () {
@@ -67,27 +74,26 @@ angular
 					return position;
 					
 				}, function ( err ) {
-					return err;
+					console.error( err.message );
+					$this.alertDialog( CONSTANTS.CORDOVA.DIALOG_ERROR_TITLE, err.message );
 				} );
 		};
 		
 		$this.toast = function ( message ) {
-			$cordovaToast.showLongBottom( message );
+			$cordovaToast
+				.showLongBottom( message )
+				.then( function ( data ) {
+					return data;
+					
+				}, function ( err ) {
+					
+					$this.alertDialog( CONSTANTS.CORDOVA.DIALOG_ERROR_TITLE, err.message );
+				} );
 		};
 		
 		$this.alertDialog = function ( title, message ) {
-			$cordovaDialogs.alert( message, title, 'OK' );
-		};
-		
-		$this.datePicker = function () {
-			var options = {
-				date:          new Date(),
-				mode:          'date',
-				minDate:       new Date(),
-				allowOldDates: false
-			};
-			
-			return $cordovaDatePicker.show( options );
+			$cordovaDialogs
+				.alert( message, title, 'OK' );
 		};
 		
 		return $this;

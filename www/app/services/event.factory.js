@@ -22,8 +22,10 @@ angular
 				.execute( query, params )
 				.then( function ( data ) {
 					//console.log( data );
+					
 				}, function ( err ) {
 					console.error( err.message );
+					CordovaFactory.alertDialog( CONSTANTS.CORDOVA.DIALOG_ERROR_TITLE, err.message );
 				} );
 		};
 		
@@ -39,6 +41,7 @@ angular
 					
 				}, function ( err ) {
 					console.error( err.message );
+					CordovaFactory.alertDialog( CONSTANTS.CORDOVA.DIALOG_ERROR_TITLE, err.message );
 				} );
 		};
 		
@@ -48,16 +51,16 @@ angular
 			return SQLiteFactory
 				.execute( query, [] )
 				.then( function ( rows ) {
-					//console.log( rows.rows.item( 1 ) );
 					var events = [];
 					
 					for ( var i = 0; i < rows.rows.length; i++ )
 						events.push( $this.makeObject( rows.rows.item( i ) ) );
 					
 					return events;
+					
 				}, function ( err ) {
 					console.error( err.message );
-					return [];
+					CordovaFactory.alertDialog( CONSTANTS.CORDOVA.DIALOG_ERROR_TITLE, err.message );
 				} );
 		};
 		
@@ -68,12 +71,11 @@ angular
 			return SQLiteFactory
 				.execute( query, params )
 				.then( function ( rows ) {
-					//console.log( rows );
 					return $this.makeObject( rows.rows.item( 0 ) );
 					
 				}, function ( err ) {
 					console.error( err.message );
-					return null;
+					CordovaFactory.alertDialog( CONSTANTS.CORDOVA.DIALOG_ERROR_TITLE, err.message );
 				} );
 		};
 		
@@ -92,9 +94,10 @@ angular
 					}
 					
 					return event;
+					
 				}, function ( err ) {
 					console.error( err.message );
-					return [];
+					CordovaFactory.alertDialog( CONSTANTS.CORDOVA.DIALOG_ERROR_TITLE, err.message );
 				} );
 		};
 		
@@ -113,9 +116,10 @@ angular
 					}
 					
 					return event;
+					
 				}, function ( err ) {
 					console.error( err.message );
-					return [];
+					CordovaFactory.alertDialog( CONSTANTS.CORDOVA.DIALOG_ERROR_TITLE, err.message );
 				} );
 		};
 		

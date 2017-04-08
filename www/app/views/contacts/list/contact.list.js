@@ -27,10 +27,6 @@ function ContactListCtrl( CordovaFactory, ContactFactory ) {
 			.then( function ( contacts ) {
 				$this.contacts = contacts;
 				
-			}, function ( err ) {
-				console.error( err.message );
-				// TODO Dialog
-				
 			} );
 	};
 	
@@ -44,9 +40,7 @@ function ContactListCtrl( CordovaFactory, ContactFactory ) {
 				
 				CordovaFactory.toast( 'Contact deleted' );
 				
-			}, function ( err ) {
-				// TODO Dialog
-			} )
+			} );
 	};
 	
 	$this.init();
