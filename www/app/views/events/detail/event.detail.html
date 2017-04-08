@@ -7,13 +7,13 @@
 				Pin contact <span class="caret" ></span >
 			</button >
 			<ul class="dropdown-menu" >
-				<li ><a href="#" >From app</a ></li >
+				<li ><a ui-sref="contactListPin({ id : eventDetailCtrl.event.id })" >From app</a ></li >
 				<li ><a href="" ng-click="eventDetailCtrl.pinContactFromMobile()" >From mobile</a ></li >
 				<li ><a ui-sref="contactNewPin({ id : eventDetailCtrl.event.id })" >Create new</a ></li >
 			</ul >
 		</div >
 	
 	</h1 >
-	<pre >{{ eventDetailCtrl.event | json }}</pre >
+	
 	<eventcard event="eventDetailCtrl.event" full="true" ></eventcard >
 </section >

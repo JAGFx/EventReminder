@@ -1,6 +1,7 @@
 <section class="col-xs-12" >
 	<h1 >ContactList
 		<a ui-sref="contactNew" class="btn btn-primary pull-right" >New contact</a >
+		<a ng-if="contactListCtrl.event" ui-sref="eventDetail({ id: contactListCtrl.event.id })" class="btn btn-success pull-right" >Back to event</a >
 	</h1 >
 	
 	<table class="table table-responsive, table-striped" ng-if="contactListCtrl.contacts" >
@@ -15,8 +16,9 @@
 			<td >{{ contact.firstname }}</td >
 			<td >{{ contact.mobile }}</td >
 			<td >
-				<a ui-sref="contactEdit({ id: contact.id })" class="btn btn-primary btn-xs" >Edit</a >
-				<button class="btn btn-danger btn-xs" ng-click="contactListCtrl.deleteContact( contact )" >Delete</button >
+				<a ng-if="!contactListCtrl.event" ui-sref="contactEdit({ id: contact.id })" class="btn btn-primary btn-xs" >Edit</a >
+				<button ng-if="!contactListCtrl.event" class="btn btn-danger btn-xs" ng-click="contactListCtrl.deleteContact( contact )" >Delete</button >
+				<button ng-if="contactListCtrl.event" class="btn btn-success btn-xs" ng-click="contactListCtrl.pinContactToEvent( contact )" >Pin</button >
 			</td >
 		</tr >
 	</table >

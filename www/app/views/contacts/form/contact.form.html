@@ -2,8 +2,6 @@
 	<h1 >Contact - {{ contactFormCtrl.type }}</h1 >
 	
 	<form name="contactForm" ng-submit="contactFormCtrl.validate( contactForm.$valid )" novalidate >
-		<pre >{{ contactFormCtrl.contact | json }}</pre >
-		
 		<div class="alert alert-warning alert-dismissible" role="alert" ng-if="contactForm.$submitted && contactForm.$invalid" >
 			<button type="button" class="close" data-dismiss="alert" aria-label="Close" >
 				<span aria-hidden="true" >&times;</span ></button >
