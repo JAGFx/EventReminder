@@ -1,6 +1,7 @@
 # EventReminder
 
 Base de projet: Cordova 6.5.0
+
 Application: AngularJS avec [angular-seed](https://github.com/angular/angular-seed)
 
 Plugin utilisés:
