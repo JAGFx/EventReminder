@@ -12,7 +12,7 @@ Plugin utilisés:
 * Dialogs : `v1.3.2`
 
 
-##Prérequis
+## Prérequis
 
 * [NodeJS](https://nodejs.org/en/download/)
 * [Cordova](https://cordova.apache.org/#getstarted)
